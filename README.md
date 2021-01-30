@@ -4,7 +4,7 @@ An application that allows users to discover color palettes/combinations that th
 
 Built for developers, designers and digital marketers.
 
-<em>Note: This is a project for my portfolio and will contain backend code that compromises backend logic.<em>
+<em>Note: This is a project for my portfolio and will contain backend code that compromises backend logic.</em>
 
 ## Contributing
 
