@@ -1,2 +1,3 @@
 node_modules
 config
+.tailwind.output.css
