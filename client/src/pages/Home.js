@@ -1,7 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const Home = props => {
+const Home = () => {
     return (
         <div>
             <h1>Home Page</h1>

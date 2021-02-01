@@ -14,7 +14,6 @@ module.exports = {
       xl: '1440px',
     },
     container: {
-      center: true,
       padding: '2rem'
     },
     extend: {
@@ -30,11 +29,7 @@ module.exports = {
       },
       borderRadius: {}
     },
-    colors: {
-      gray: colors.coolGray,
-      blue: colors.lightBlue,
-      red: colors.rose,
-    },
+
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
       serif: ['Merriweather', 'serif'],

@@ -1,7 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const ColorSet = props => {
+const ColorSet = () => {
     return (
         <div>
             <h1>Color Set Page</h1>

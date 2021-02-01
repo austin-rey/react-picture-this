@@ -6,7 +6,8 @@ const colors = require('colors');
 const connectDB = require('./config/db');
 const path = require('path');
 const errorHandler = require('./middleware/error');
-
+var cors = require('cors')
+ 
 dotenv.config({path: './config/config.env'})
 
 // Connect to DB
@@ -20,6 +21,9 @@ const app = express();
 
 // Body Parser
 app.use(express.json());
+
+// Cors
+app.use(cors())
 
 // Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
