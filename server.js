@@ -4,6 +4,7 @@ const fileupload = require('express-fileupload');
 const morgan = require('morgan');
 const colors = require('colors');
 const connectDB = require('./config/db');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const errorHandler = require('./middleware/error');
 var cors = require('cors')
@@ -15,6 +16,7 @@ connectDB();
 
 // Routes
 const auth = require('./routes/auth');
+const set = require('./routes/set');
 
 // Initialize app
 const app = express();
@@ -32,13 +34,15 @@ if (process.env.NODE_ENV === 'development') {
 
 // TODO: File upload
 
-// TODO: Cookie Parser
+// Cookie Parser
+app.use(cookieParser());
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount Routers
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/set', set);
 
 // Global error handler
 app.use(errorHandler);

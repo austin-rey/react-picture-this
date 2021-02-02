@@ -12,8 +12,6 @@ const ColorSet = () => {
         execute
     } = useGetColorSet();
 
-    console.log(data)
-
     useEffect(() => {
         try {
             execute(123);
@@ -22,7 +20,6 @@ const ColorSet = () => {
         }
     }, [execute])
 
-    console.log(data);
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto">

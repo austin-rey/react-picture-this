@@ -3,6 +3,7 @@ import React,{useState, useEffect} from 'react'
 import { BrowserRouter as Router,Link } from 'react-router-dom'
 
 import { useGetColorSets } from '../hooks/useGetColorSets'
+import { useUploadImage } from '../hooks/useUploadImage'
 
 const Home = () => {
     const { 
@@ -12,8 +13,6 @@ const Home = () => {
         execute
     } = useGetColorSets();
 
-    console.log(data)
-
     useEffect(() => {
         try {
             execute(123);
@@ -22,11 +21,35 @@ const Home = () => {
         }
     }, [execute])
 
-    const uploadImage = (e,value) => {
-        e.preventDefault();
-        console.log(e.target)
+
+    const { 
+        isLoading: isLoadingImage,
+        data: dataImage,
+        error: errorImage,
+        execute: executeImage
+    } = useUploadImage();
+
+    const [uploadedImage, setUploadedImage] = useState({
+        name: "",
+        file: ""
+    })
+
+    const nameChange = (e) => {
+        setUploadedImage({...uploadedImage, name: e.target.value})
     }
 
+    const imageSubmit = (e,value) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('myImage',uploadedImage.file);
+        formData.append('name',uploadedImage.name);
+        executeImage(formData)
+    }
+
+    const handleImageUpload = (e) => {
+        setUploadedImage({...uploadedImage, file: e.target.files[0]})
+    }
+    
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto">
@@ -54,12 +77,13 @@ const Home = () => {
                                     </div>
                                 ))
                             }
-                             <div className="flex flex-col align-center py-10 px-6 my-2 text-center border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer" onClick={()=>console.log('click')}>
+                             <div className="flex flex-col align-center py-10 px-6 my-2 text-center border-4 border-gray-500 border-opacity-20 rounded-md">
                                 <h2 className="font-sans text-2xl">Create New Set</h2>
                                 <div className="p-4 m-2 bg-gray-200 rounded-md ">
-                                    <form onSubmit={uploadImage}>
-                                        <input className="text-center flex mb-4" type="file" id="image-upload-button" name="image upload button" accept="image/png, image/jpeg"/>
-                                        <input type="submit" value="Submit" className="w-full p-2 bg-green-700 text-white rounded-md"/>
+                                    <form onSubmit={imageSubmit} encType="multipart/form-data" >
+                                        <input type="text" id="name-field" name="name" placeholder="Enter a set name..." value={uploadedImage.name} className="w-full p-2 rounded-md border-4 border-green-500 border-opacity-50 focus:border-opacity-100 outline-none" onChange={nameChange}/>
+                                        <input className="text-center flex mb-4" type="file" id="image-upload-button" name="setImage" accept="image/png, image/jpeg" onChange={handleImageUpload}/>
+                                        <input type="submit" value="Submit" className="w-full p-2 bg-green-700 text-white rounded-md cursor-pointer"/>
                                     </form>
                                 </div>
                              </div>
