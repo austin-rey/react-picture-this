@@ -21,7 +21,7 @@ function App() {
         <Route exact path='/home/:id'>
           <Home/>
         </Route>
-        <Route exact path='/colorset/:id'>
+        <Route exact path='/set/:id'>
           <ColorSet/>
         </Route>
       </Router>

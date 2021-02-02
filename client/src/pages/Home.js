@@ -1,5 +1,7 @@
 import React,{useState, useEffect} from 'react'
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { BrowserRouter as Router,Link } from 'react-router-dom'
 
 import { useGetColorSets } from '../hooks/sets/useGetColorSets'
@@ -30,6 +32,7 @@ const Home = () => {
     } = useUploadImage();
 
     const [uploadedImage, setUploadedImage] = useState({
+        setID: uuidv4(),
         name: "",
         file: ""
     })
@@ -43,6 +46,7 @@ const Home = () => {
         const formData = new FormData();
         formData.append('myImage',uploadedImage.file);
         formData.append('name',uploadedImage.name);
+        formData.append('setID',uploadedImage.setID);
         executeImage(formData)
     }
 
@@ -50,6 +54,7 @@ const Home = () => {
         setUploadedImage({...uploadedImage, file: e.target.files[0]})
     }
     
+    console.log(data)
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto">
@@ -59,22 +64,24 @@ const Home = () => {
                         <div className="flex flex-col justify-center align-center p-6">
                             {data &&
                                 data.map((set) => (
-                                    <div className="flex flex-row align-center py-10 px-6 my-2  border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer">
-                                        <div>
-                                            <img className="w-full" src={set.imagePreview} alt=""/>
-                                        </div>
-                                        <div className="flex flex-col w-full">
-                                            <div className="flex flex-row justify-between items-start flex-grow px-2">
-                                                <h2 className="font-sans text-2xl">{set.name}</h2>
-                                                <p>{set.created}</p>
+                                    <Link to={`../set/${set.setID}`}>
+                                        <div className="flex flex-row align-center py-10 px-6 my-2  border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer">
+                                            <div>
+                                                <img className="w-full" src={set.image} alt={set.name}/>
                                             </div>
-                                            <div className="flex flex-row justify-between items-start flex-grow px-2 h-full">
-                                                {set.colors.map((color) => (
-                                                    <span className="w-1/5 h-full" style={{backgroundColor: color}}/>
-                                                ))}
+                                            <div className="flex flex-col w-full">
+                                                <div className="flex flex-row justify-between items-start flex-grow px-2">
+                                                    <h2 className="font-sans text-2xl">{set.name}</h2>
+                                                    <p>{set.createdAt}</p>
+                                                </div>
+                                                <div className="flex flex-row justify-between items-start flex-grow px-2 h-full">
+                                                    {set.colors.map((color) => (
+                                                        <span className="w-1/5 h-8" style={{backgroundColor: Object.keys(color)}}/>
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 ))
                             }
                              <div className="flex flex-col align-center py-10 px-6 my-2 text-center border-4 border-gray-500 border-opacity-20 rounded-md">

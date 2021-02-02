@@ -7,36 +7,8 @@ import axios from "axios";
 import picturethis from '../../api/picturethis'
 
 export const getColorSets = async (userId) => {
-    const sampleSetData = [
-        {
-            imagePreview: 'https://via.placeholder.com/150x100.png',
-            colors: [
-                '#4F5837','#5E6647','#6C7357','#7B8167','#898E77'
-            ],
-            created: new Date().toUTCString(),
-            lastUpdated: new Date().toUTCString(),
-            name: 'Green Color Set'
-        },
-        {
-            imagePreview: 'https://via.placeholder.com/150x100.png',
-            colors: [
-                '#7A6C5D','#8E8173','#A19689','#B5AB9F','#C9BFB5'
-            ],
-            created: new Date().toUTCString(),
-            lastUpdated: new Date().toUTCString(),
-            name: 'Brown Color Set'
-        },
-        {
-            imagePreview: 'https://via.placeholder.com/150x100.png',
-            colors: [
-                '#343A40','#4B5055','#61666A','#787C80','#8E9295'
-            ],
-            created: new Date().toUTCString(),
-            lastUpdated: new Date().toUTCString(),
-            name: 'Gray Color Set'
-        },
-    ]
-    return sampleSetData;
+  const response = await picturethis.get('set/view');
+  return response.data.data;
 }
 
 getColorSets.propTypes = {
