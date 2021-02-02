@@ -5,6 +5,11 @@ const SetSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please add a set name.'],
     },
+    setID: {
+        type: String,
+        required: [true, 'Please add a set it.'],
+        unique: true
+    },
     image: {
         type: String,
         required: [true, 'Please add an image path.']
