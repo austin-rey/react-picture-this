@@ -2,8 +2,8 @@ import React,{useState, useEffect} from 'react'
 
 import { BrowserRouter as Router,Link } from 'react-router-dom'
 
-import { useGetColorSets } from '../hooks/useGetColorSets'
-import { useUploadImage } from '../hooks/useUploadImage'
+import { useGetColorSets } from '../hooks/sets/useGetColorSets'
+import { useUploadImage } from '../hooks/sets/useUploadImage'
 
 const Home = () => {
     const { 

@@ -4,23 +4,27 @@ import PropTypes from 'prop-types'
 
 import axios from "axios";
 
-import picturethis from '../api/picturethis'
 
-export const uploadImage = async (formData) => {
+import picturethis from '../../api/picturethis'
+
+export const registerUser = async (options) => {
   const response = await picturethis.post(
-    'set/create',
-    formData,
-    {'content-type': 'multipart/form-data'}
+    'auth/register',
+    {
+      "name": options.name,
+      "email": options.email,
+      "password": options.password
+    }
   );
   
   return;
 }
 
-uploadImage.propTypes = {
-    formData: PropTypes.object
+registerUser.propTypes = {
+  formFields: PropTypes.object
 }
 
-export const useUploadImage = () => {
+export const useRegisterUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -28,10 +32,11 @@ export const useUploadImage = () => {
   const execute = async (options = {}) => {
     try {
       setIsLoading(true);
-      const results = await uploadImage(options);
+      const results = await registerUser(options);
       setData(results);
       return results;
     } catch (error) {
+      console.log(error)
       setError(error);
     } finally {
       setIsLoading(false);

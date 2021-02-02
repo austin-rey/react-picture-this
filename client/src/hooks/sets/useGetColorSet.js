@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import axios from "axios";
 
-import picturethis from '../api/picturethis'
+import picturethis from '../../api/picturethis'
 
 export const getColorSet = async (setId) => {
     const sampleSetData = {

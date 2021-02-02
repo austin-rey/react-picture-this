@@ -2,26 +2,25 @@ import { useState,useCallback } from 'react';
 
 import PropTypes from 'prop-types'
 
-import picturethis from '../api/picturethis'
+import axios from "axios";
 
-export const loginUser = async (options) => {
-  console.log(options)
+import picturethis from '../../api/picturethis'
 
-  const response = await picturethis.post('auth/login', {
-    email: options.email,
-    password: options.password
-  })
-
-  console.log(response)
-
-  return response;
+export const uploadImage = async (formData) => {
+  const response = await picturethis.post(
+    'set/create',
+    formData,
+    {'content-type': 'multipart/form-data'}
+  );
+  
+  return;
 }
 
-loginUser.propTypes = {
-    formFields: PropTypes.object
+uploadImage.propTypes = {
+    formData: PropTypes.object
 }
 
-export const useLoginUser = () => {
+export const useUploadImage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -29,7 +28,7 @@ export const useLoginUser = () => {
   const execute = async (options = {}) => {
     try {
       setIsLoading(true);
-      const results = await loginUser(options);
+      const results = await uploadImage(options);
       setData(results);
       return results;
     } catch (error) {
