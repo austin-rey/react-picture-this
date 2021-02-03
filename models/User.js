@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-      },
+    },
 })
 
 // Encrypt password using bcrypt
@@ -38,9 +38,9 @@ UserSchema.pre('save', async function(next) {
 
 // Sign JWT and return
 UserSchema.methods.getSignedJwtToken = function() {
-    return jwt.sign({id: this._id}, process.env.JWT_SECRET, {
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRE,
-      })
+      });
 }
 
 // Match req password to hashed password in DB

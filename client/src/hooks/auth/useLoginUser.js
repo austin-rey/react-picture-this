@@ -5,9 +5,15 @@ import PropTypes from 'prop-types'
 import picturethis from '../../api/picturethis'
 
 export const loginUser = async (options) => {
-  const response = await picturethis.post('auth/login', {
+  const response = await picturethis.post('auth/login', 
+  {
     email: options.email,
     password: options.password
+  },{
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true
   })
 
   return response;

@@ -18,7 +18,7 @@ function App() {
         <Route exact path='/login'>
           <Login/>
         </Route>
-        <Route exact path='/home/:id'>
+        <Route exact path='/sets'>
           <Home/>
         </Route>
         <Route exact path='/set/:id'>

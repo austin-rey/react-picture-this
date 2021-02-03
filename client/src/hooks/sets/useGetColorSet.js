@@ -7,7 +7,7 @@ import axios from "axios";
 import picturethis from '../../api/picturethis'
 
 export const getColorSet = async (setId) => {
-  const response = await picturethis.get(`set/view/${setId}`);
+  const response = await picturethis.get(`set/${setId}`,{ withCredentials: true });
   return response.data.data;
 }
 

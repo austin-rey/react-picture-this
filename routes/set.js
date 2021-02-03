@@ -36,9 +36,9 @@ const upload = multer({
 })
 
 
-router.post('/create', upload.single('myImage'), create);
-router.get('/view', viewSets);
-router.get('/view/:id', viewSet);
-router.delete('/delete/:id', deleteSet);
+router.post('/create',protect, upload.single('myImage'), create);
+router.get('/',protect, viewSets);
+router.get('/:id',protect, viewSet);
+router.delete('/:id',protect, deleteSet);
 
 module.exports = router;

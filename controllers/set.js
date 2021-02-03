@@ -7,6 +7,9 @@ const Set = require('../models/Set');
 // @access  Private
 exports.create = asyncHandler(async (req, res, next) => {
     
+    // Add user to req body
+    req.body.user = req.user.id;
+
     // TODO - Analyze image and return colors
     const imageColors = () => {
         // return [
@@ -35,41 +38,68 @@ exports.create = asyncHandler(async (req, res, next) => {
     }
 
     const set = await Set.create({
-        setID: req.body.setID,
         name: req.body.name,
         image:  req.file.path,
+        user: req.body.user,
         colors: imageColors()
     })
 
-    const createdSet = await Set.findById(set._id, "-_id").exec();
-
-    res.status(200).json({ success: true, data: createdSet });
+    res.status(200).json({ success: true, data: set });
 })
 
 // @desc    View a set
-// @route   GET /api/v1/set/view/:id
+// @route   GET /api/v1/set/:id
 // @access  Private
 exports.viewSet = asyncHandler(async (req, res, next) => {
-    const set = await Set.find({setID: req.params.id}, "-_id");
+
+    console.log(req.params.id);
+    const set = await Set.find({slug: req.params.id});
+
+    if (!set) {
+        return next(
+          new ErrorResponse(`No course with the id of ${req.params.id}`),
+          404
+        );
+    }
+
     res.status(200).json({ success: true, data: set });
 })
 
 // @desc    View all sets
-// @route   GET /api/v1/set/view/
+// @route   GET /api/v1/set/
 // @access  Private
 exports.viewSets = asyncHandler(async (req, res, next) => {
-    const sets = await Set.find({}, "-_id");
+    const sets = await Set.find({});
     res.status(200).json({ success: true, data: sets });
 })
 
 // @desc    Delete a set
-// @route   DELETE /api/v1/set/delete/:id
+// @route   DELETE /api/v1/set/:id
 // @access  Private
 exports.deleteSet = asyncHandler(async (req, res, next) => {
-    const sets = await Set.findOneAndDelete({setID: req.params.id});
+    const set = await Set.findById(req.params.id);
+
+    if (!set) {
+        return next(
+          new ErrorResponse(`No course with the id of ${req.params.id}`),
+          404
+        );
+    }
+
+    if(set.user.toString() !== req.user.id) {
+        return next(
+            new ErrorResponse(`Not authorized to delete this set`),
+            401
+          );
+    }
+    set.remove();
+
     res.status(200).json({ success: true});
 })
 
 // @desc    Update a set
 // @route   PUT /api/v1/set/update/:id
 // @access  Private
+
+// TODO: How will users be able to update their sets
+// Check that the sets user id equals the requests user id

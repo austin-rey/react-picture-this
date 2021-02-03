@@ -10,7 +10,7 @@ export const uploadImage = async (formData) => {
   const response = await picturethis.post(
     'set/create',
     formData,
-    {'content-type': 'multipart/form-data'}
+    {headers: {'content-type': 'multipart/form-data'}, withCredentials: true },
   );
   
   return;

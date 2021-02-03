@@ -32,7 +32,6 @@ const Home = () => {
     } = useUploadImage();
 
     const [uploadedImage, setUploadedImage] = useState({
-        setID: uuidv4(),
         name: "",
         file: ""
     })
@@ -46,7 +45,6 @@ const Home = () => {
         const formData = new FormData();
         formData.append('myImage',uploadedImage.file);
         formData.append('name',uploadedImage.name);
-        formData.append('setID',uploadedImage.setID);
         executeImage(formData)
     }
 
@@ -54,7 +52,6 @@ const Home = () => {
         setUploadedImage({...uploadedImage, file: e.target.files[0]})
     }
     
-    console.log(data)
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto">
@@ -64,7 +61,7 @@ const Home = () => {
                         <div className="flex flex-col justify-center align-center p-6">
                             {data &&
                                 data.map((set) => (
-                                    <Link to={`../set/${set.setID}`}>
+                                    <Link to={`../set/${set.slug}`}>
                                         <div className="flex flex-row align-center py-10 px-6 my-2  border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer">
                                             <div>
                                                 <img className="w-full" src={set.image} alt={set.name}/>

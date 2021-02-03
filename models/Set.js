@@ -1,14 +1,10 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const SetSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Please add a set name.'],
-    },
-    setID: {
-        type: String,
-        required: [true, 'Please add a set it.'],
-        unique: true
     },
     image: {
         type: String,
@@ -22,6 +18,21 @@ const SetSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    slug: {
+        type: String
+    }
 })
 
+// Create bootcamp slug from name
+SetSchema.pre('save', function (next) {
+    this.slug = slugify(this.name, { lower: true,replacement: '-' });
+    next();
+});
+
+  
 module.exports = mongoose.model('Set', SetSchema)
