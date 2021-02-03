@@ -4,7 +4,7 @@ const fileupload = require('express-fileupload');
 const morgan = require('morgan');
 const colors = require('colors');
 const connectDB = require('./config/db');
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 const path = require('path');
 const errorHandler = require('./middleware/error');
 var cors = require('cors')
@@ -25,7 +25,7 @@ const app = express();
 app.use(express.json());
 
 // Cors
-app.use(cors())
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 // Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
