@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router,Link } from 'react-router-dom'
+import { BrowserRouter as Router,Link,Route } from 'react-router-dom'
 
 const Header = () => {
     return (
@@ -14,6 +14,8 @@ const Header = () => {
                             <p><Link to="/" className="p-2 text-white font-sans text-sm">Home</Link></p>
                             <p><Link to="/" className="p-2 text-white font-sans text-sm">About</Link></p>
                             <p><Link to="/login" className="p-2 text-white font-sans text-sm">Login</Link></p>
+                            <p><Link to="/register" className="p-2 text-white font-sans text-sm">Register</Link></p>
+                            <p><Link to="/" className="p-2 text-white font-sans text-sm">Logout</Link></p>
                         </div>
                     </div>
                 </Router>
