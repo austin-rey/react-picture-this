@@ -7,7 +7,7 @@ const RegisterForm = ({onChange,formFields,onSubmit}) => {
         <form className="root flex flex-col align-items-stretch" onSubmit={onSubmit}>
             <div className="m-5">
                 <p className="w-full py-2 text-left text-lg">Name</p>
-                <input type="text" id="name-field" name="name" placeholder="Enter a valid name..." className="w-full p-2 rounded-md border-4 border-green-500 border-opacity-50 focus:border-opacity-100 outline-none" value={formFields.name} onChange={onChange}/>
+                <input type="text" id="name-field" name="username" placeholder="Enter a valid name..." className="w-full p-2 rounded-md border-4 border-green-500 border-opacity-50 focus:border-opacity-100 outline-none" value={formFields.username} onChange={onChange}/>
             </div>
             <div className="m-5">
                 <p className="w-full py-2 text-left text-lg">Email</p>
@@ -15,7 +15,7 @@ const RegisterForm = ({onChange,formFields,onSubmit}) => {
             </div>
             <div className="m-5">
                 <p className="w-full py-2 text-left text-lg">Password</p>
-                <input type="text" id="password-field" name="password" placeholder="Enter a valid password..." className="w-full p-2 rounded-md border-4 border-green-500 border-opacity-50 focus:border-opacity-100 outline-none" value={formFields.password} onChange={onChange}/>
+                <input type="password" id="password-field" name="password" placeholder="Enter a valid password..." className="w-full p-2 rounded-md border-4 border-green-500 border-opacity-50 focus:border-opacity-100 outline-none" value={formFields.password} onChange={onChange}/>
             </div>
             <div className="m-5">
                 <input type="submit" value="Submit" className="w-full p-2 bg-green-700 text-white rounded-md"/>

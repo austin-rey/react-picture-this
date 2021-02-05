@@ -1,14 +1,15 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect,useContext} from 'react'
 import { BrowserRouter as Router,Link } from 'react-router-dom'
 import { useLoginUser } from '../hooks/auth/useLoginUser'
 import LoginForm from '../components/LoginForm'
+import { SessionContext } from "../util/session";
 
-const Login = () => {
+const Login = ({history}) => {
     const { 
-        isLoading: isLoadingLU,
-        data: dataLU,
-        error: errorLU,
-        execute: executeLU
+        isLoading,
+        data,
+        error,
+        execute
     } = useLoginUser();
 
     const [loginUser, setLoginUser] = useState(
@@ -24,8 +25,15 @@ const Login = () => {
 
     const submitLoginUser = (e) => {
         e.preventDefault();
-        executeLU(loginUser)
+        execute({loginUser,history})
     }
+
+    const session = useContext(SessionContext);
+    useEffect(() => {
+        if(session !== undefined) {
+            history.push('/sets')
+        }
+    }, [session])
 
     return (
         <div className="root h-full bg-green-700">

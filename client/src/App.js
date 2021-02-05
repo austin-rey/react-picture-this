@@ -1,35 +1,9 @@
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-
-import Landing from './pages/Landing'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Home from './pages/Home'
-import ColorSet from './pages/ColorSet'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Routes from './components/Routes'
 
 function App() {
   return (
     <div className="root bg-gray-100">
-      <Header/>
-      <Router>
-        <Route exact path='/'>
-          <Landing/>
-        </Route>
-        <Route exact path='/login'>
-          <Login/>
-        </Route>
-        <Route exact path='/register'>
-          <Register/>
-        </Route>
-        <Route exact path='/sets'>
-          <Home/>
-        </Route>
-        <Route exact path='/set/:id'>
-          <ColorSet/>
-        </Route>
-      </Router>
-      <Footer/>
+     <Routes/>
     </div>
   );
 }

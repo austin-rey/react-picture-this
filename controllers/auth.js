@@ -50,7 +50,6 @@ exports.login = asyncHandler(async (req, res, next) => {
 // @route   GET /api/v1/auth/me
 // @access  Private
 exports.getMe = asyncHandler(async (req, res, next) => {
-    console.log(req)
     const user = await User.findById(req.user.id);
   
     res.status(200).json({ success: true, data: user });
@@ -66,15 +65,20 @@ const sendTokenResponse = (user, statusCode, res) => {
         expires: new Date(
         Date.now() + process.env.JWT_COOKIE_EXPIRE * 25 * 60 * 60 * 1000
         ),
-        httpOnly: true,
+        httpOnly: false,
     };
 
     if (process.env.NODE_ENV === 'production') {
         options.secure = true;
     }
 
+    console.log(user)
     res.status(statusCode).cookie('token', token, options).json({
         success: true,
         token,
+        user: {
+            name: user.name,
+            email: user.email
+        }
     });
 }

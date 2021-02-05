@@ -1,13 +1,15 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect,useContext} from 'react'
 
-import { v4 as uuidv4 } from 'uuid';
-
-import { BrowserRouter as Router,Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { useGetColorSets } from '../hooks/sets/useGetColorSets'
 import { useUploadImage } from '../hooks/sets/useUploadImage'
 
-const Home = () => {
+import { SessionContext } from "../util/session";
+
+import * as Cookies from "js-cookie";
+
+const Home = ({history}) => {
     const { 
         isLoading,
         data,
@@ -15,13 +17,14 @@ const Home = () => {
         execute
     } = useGetColorSets();
 
+    const session = useContext(SessionContext);
     useEffect(() => {
-        try {
-            execute(123);
-        } catch (error) {
-           console.log(error) 
+        if(session === undefined) {
+            history.push('/login')
+        }else{
+            execute({history});
         }
-    }, [execute])
+    }, [execute,session])
 
 
     const { 
@@ -51,7 +54,7 @@ const Home = () => {
     const handleImageUpload = (e) => {
         setUploadedImage({...uploadedImage, file: e.target.files[0]})
     }
-    
+
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto">
@@ -60,8 +63,8 @@ const Home = () => {
                         <h1 className="font-sans text-3xl p-4">Welcome Back, User</h1>
                         <div className="flex flex-col justify-center align-center p-6">
                             {data &&
-                                data.map((set) => (
-                                    <Link to={`../set/${set.slug}`}>
+                                data.map((set,i) => (
+                                    <Link to={`../set/${set.slug}`} key={i}>
                                         <div className="flex flex-row align-center py-10 px-6 my-2  border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer">
                                             <div>
                                                 <img className="w-full" src={set.image} alt={set.name}/>
@@ -72,8 +75,8 @@ const Home = () => {
                                                     <p>{set.createdAt}</p>
                                                 </div>
                                                 <div className="flex flex-row justify-between items-start flex-grow px-2 h-full">
-                                                    {set.colors.map((color) => (
-                                                        <span className="w-1/5 h-8" style={{backgroundColor: Object.keys(color)}}/>
+                                                    {set.colors.map((color,i) => (
+                                                        <span key={i} className="w-1/5 h-8" style={{backgroundColor: Object.keys(color)}}/>
                                                     ))}
                                                 </div>
                                             </div>

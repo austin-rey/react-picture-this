@@ -1,21 +1,19 @@
 import { useState,useCallback } from 'react';
-
 import PropTypes from 'prop-types'
-
 import picturethis from '../../api/picturethis'
+import { setSessionCookie } from "../../util/session"
 
-export const loginUser = async (options) => {
+export const loginUser = async ({loginUser, history}) => {
   const response = await picturethis.post('auth/login', 
   {
-    email: options.email,
-    password: options.password
+    email: loginUser.email,
+    password: loginUser.password
   },{
     headers: {
       'Content-Type': 'application/json'
     },
     withCredentials: true
   })
-
   return response;
 }
 
@@ -33,6 +31,8 @@ export const useLoginUser = () => {
       setIsLoading(true);
       const results = await loginUser(options);
       setData(results);
+      setSessionCookie(results.data.token)
+      options.history.push('/sets')
       return results;
     } catch (error) {
       setError(error);

@@ -1,23 +1,22 @@
 import { useState,useCallback } from 'react';
-
 import PropTypes from 'prop-types'
-
-import axios from "axios";
-
-
 import picturethis from '../../api/picturethis'
 
-export const registerUser = async (options) => {
+export const registerUser = async ({registerUser}) => {
   const response = await picturethis.post(
     'auth/register',
     {
-      "name": options.name,
-      "email": options.email,
-      "password": options.password
-    }
-  );
-  
-  return;
+      "name": registerUser.username,
+      "email": registerUser.email,
+      "password": registerUser.password
+    },{
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+  })
+  console.log(response)
+  return response;
 }
 
 registerUser.propTypes = {
@@ -39,6 +38,7 @@ export const useRegisterUser = () => {
       console.log(error)
       setError(error);
     } finally {
+      options.history.push('/sets')
       setIsLoading(false);
     }
   };

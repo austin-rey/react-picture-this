@@ -1,8 +1,10 @@
 import React,{useState, useEffect} from 'react'
 
-import { BrowserRouter as Router,Link,useParams } from 'react-router-dom'
+import { Link,useParams } from 'react-router-dom'
 
 import { useGetColorSet } from '../hooks/sets/useGetColorSet'
+
+import { SessionContext } from "../util/session";
 
 const ColorSet = () => {
     const { 
@@ -14,15 +16,16 @@ const ColorSet = () => {
 
     let { id } = useParams();
 
-    useEffect(() => {
-        try {
-            execute(id);
-        } catch (error) {
-           console.log(error) 
-        }
-    }, [execute])
+    const session = useContext(SessionContext);
 
-    console.log(data)
+    useEffect(() => {
+       if(session === undefined) {
+            history.push('/login')
+        }else{
+            execute(id);
+        }
+    }, [execute,session])
+
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto">
