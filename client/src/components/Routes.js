@@ -35,7 +35,7 @@ const Routes = () => {
     return (
         <SessionContext.Provider value={session}>
             <Router history={history}>
-                <Header/>
+                <Header history={history}/>
                 <Switch>
                     <Route exact path='/' component={Landing}/>
                     <Route exact path='/login' component={Login}/>

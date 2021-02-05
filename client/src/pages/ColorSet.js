@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect,useContext} from 'react'
 
 import { Link,useParams } from 'react-router-dom'
 
@@ -6,7 +6,7 @@ import { useGetColorSet } from '../hooks/sets/useGetColorSet'
 
 import { SessionContext } from "../util/session";
 
-const ColorSet = () => {
+const ColorSet = ({history}) => {
     const { 
         isLoading,
         data,

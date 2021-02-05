@@ -7,8 +7,6 @@ import { useUploadImage } from '../hooks/sets/useUploadImage'
 
 import { SessionContext } from "../util/session";
 
-import * as Cookies from "js-cookie";
-
 const Home = ({history}) => {
     const { 
         isLoading,
@@ -16,16 +14,6 @@ const Home = ({history}) => {
         error,
         execute
     } = useGetColorSets();
-
-    const session = useContext(SessionContext);
-    useEffect(() => {
-        if(session === undefined) {
-            history.push('/login')
-        }else{
-            execute({history});
-        }
-    }, [execute,session])
-
 
     const { 
         isLoading: isLoadingImage,
@@ -55,6 +43,15 @@ const Home = ({history}) => {
         setUploadedImage({...uploadedImage, file: e.target.files[0]})
     }
 
+    const session = useContext(SessionContext);
+    useEffect(() => {
+        if(session === undefined) {
+            history.push('/login')
+        }else{
+            execute({history});
+        }
+    }, [execute,session])
+    
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto">

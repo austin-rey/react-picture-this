@@ -16,9 +16,8 @@ export const setSessionCookie = (cookie) => {
     Cookies.set('token', cookie)
 }
 
-// export const deleteSessionCookie = () => {
-//     Cookies.remove("session");
-//     history.push("/login");
-// }
+export const deleteSessionCookie = () => {
+    Cookies.remove("token");
+}
 
 export const SessionContext = React.createContext(getSessionCookie());
