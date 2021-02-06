@@ -4,6 +4,7 @@ import { useGetColorSets } from '../hooks/sets/useGetColorSets'
 import { useUploadImage } from '../hooks/sets/useUploadImage'
 import { SessionContext } from "../util/session";
 import Modal from 'react-modal';
+import ColorRectangle from '../components/ColorRectangle'
 
 const Home = ({history}) => {
     const { 
@@ -82,7 +83,7 @@ const Home = ({history}) => {
                         {data &&
                             data.map((set,i) => (
                                 <Link to={`../set/${set.slug}`} key={i}>
-                                    <div className="flex flex-row align-center py-10 px-6 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer">
+                                    <div className="flex flex-row align-center py-10 px-6 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer hover:border-opacity-50">
                                         <div className="md:w-full lg:w-72 flex">
                                             <div className="w-full h-full bg-gray-200">
                                                 {/* <img className="w-full h-auto" src="https://via.placeholder.com/300x250.png" alt={set.name}/> */}
@@ -96,7 +97,9 @@ const Home = ({history}) => {
                                             </div>
                                             <div className="flex flex-row justify-between items-start flex-grow h-full">
                                                 {set.colors.map((color,i) => (
-                                                    <span key={i} className="w-1/5 h-12" style={{backgroundColor: Object.keys(color)}}/>
+                                                    <div key={i} className="w-1/5 h-12">
+                                                        <ColorRectangle hex={Object.keys(color)}/>
+                                                    </div>
                                                 ))}
                                             </div>
                                         </div>
