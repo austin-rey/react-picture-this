@@ -5,6 +5,7 @@ import { useUploadImage } from '../hooks/sets/useUploadImage'
 import { SessionContext } from "../util/session";
 import Modal from 'react-modal';
 import ColorRectangle from '../components/ColorRectangle'
+import SetsToolbar from '../components/SetsToolbar'
 
 const Home = ({history}) => {
     const { 
@@ -14,6 +15,7 @@ const Home = ({history}) => {
         execute
     } = useGetColorSets();
 
+    // Handles Modal Form State ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const { 
         isLoading: isLoadingImage,
         data: dataImage,
@@ -42,6 +44,7 @@ const Home = ({history}) => {
         setUploadedImage({...uploadedImage, file: e.target.files[0]})
     }
 
+    // Session and Initial Loading ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const session = useContext(SessionContext);
     useEffect(() => {
         if(session === undefined) {
@@ -51,39 +54,55 @@ const Home = ({history}) => {
         }
     }, [execute,session])
     
+    // Modal ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const modalStyles = {
         content : {
-          top                   : '50%',
-          left                  : '50%',
-          right                 : 'auto',
-          bottom                : 'auto',
-          marginRight           : '-50%',
-          transform             : 'translate(-50%, -50%)',
-          width                 : '80vw',
-          display               : 'flex',
-          flexDirection         : 'column',
-          maxWidth              : '900px',
-          boxShadow             : '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+            top                   : '50%',
+            left                  : '50%',
+            right                 : 'auto',
+            bottom                : 'auto',
+            marginRight           : '-50%',
+            transform             : 'translate(-50%, -50%)',
+            width                 : '80vw',
+            display               : 'flex',
+            flexDirection         : 'column',
+            maxWidth              : '900px',
+            boxShadow             : '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
         }
-      };
+    };
+
     const [modalIsOpen,setIsOpen] = React.useState(false);
+
     function openModal() {
         setIsOpen(true);
     }
+
     function closeModal(){
         setIsOpen(false);
     }
-    console.log(data)
+
+    // Set Toolbar ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    const [searchQuery, setSearchQuery] = useState('')
+    const searchChange = (e) => {
+        setSearchQuery(e.target.value)
+    }
+
+    const [sortSelect, setSortSelect] = useState('Creator')
+    const sortChange = (e) => {
+        setSortSelect(e.target.value)
+    }
+
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto pt-12 pb-12"> 
                 <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md">
                     <h1 className="font-sans text-3xl p-4">Welcome Back, User</h1>
+                    <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange}/>
                     <div className="flex flex-col justify-center align-center p-6">
                         {data &&
                             data.map((set,i) => (
                                 <Link to={`../set/${set.slug}`} key={i}>
-                                    <div className="flex flex-row align-center py-10 px-6 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer hover:border-opacity-50">
+                                    <div className="flex flex-row align-center py-10 px-6 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer hover:border-green-500">
                                         <div className="md:w-full lg:w-72 flex">
                                             <div className="w-full h-full bg-gray-200">
                                                 {/* <img className="w-full h-auto" src="https://via.placeholder.com/300x250.png" alt={set.name}/> */}
@@ -98,7 +117,7 @@ const Home = ({history}) => {
                                             <div className="flex flex-row justify-between items-start flex-grow h-full">
                                                 {set.colors.map((color,i) => (
                                                     <div key={i} className="w-1/5 h-12">
-                                                        <ColorRectangle hex={Object.keys(color)}/>
+                                                        <ColorRectangle hex={Object.keys(color).toString()}/>
                                                     </div>
                                                 ))}
                                             </div>
@@ -114,7 +133,7 @@ const Home = ({history}) => {
                             isOpen={modalIsOpen}
                             onRequestClose={closeModal}
                             style={modalStyles}
-                            contentLabel="Example Modal"
+                            contentLabel="EUpload Image Modal"
                         >
                             <div className="flex flex-row justify-between items-start">
                             <h2 className="font-sans text-2xl pb-2">Create a New Set</h2>
