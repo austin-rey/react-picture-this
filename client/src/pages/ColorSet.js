@@ -42,8 +42,8 @@ const ColorSet = ({history}) => {
                             <div className="flex flex-col justify-center align-center p-6">
                                 <img src={data[0].image} alt="Uploaded image for this data set" className="mb-2 rounded-md" />
                                 <div className="flex flex-row justify-items-stretch">
-                                    {data[0].colors.map((color)=>(
-                                        <div className="flex flex-col w-full mx-1">
+                                    {data[0].colors.map((color,i)=>(
+                                        <div className="flex flex-col w-full mx-1" key={i}>
                                             {Object.values(color).map((shades) => (
                                                 shades.map((shade,i) => (
                                                     <div key={i} className="w-full h-20 my-1 flex justify-center items-center">
