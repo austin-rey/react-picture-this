@@ -92,6 +92,7 @@ const Home = ({history}) => {
         setSortSelect(e.target.value)
     }
 
+    console.log(data)
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto pt-12 pb-12"> 
@@ -115,9 +116,9 @@ const Home = ({history}) => {
                                                 <h6 className="font-sans text-md pb-2 text-gray-400">Created By: {set.user.name}</h6>
                                             </div>
                                             <div className="flex flex-row justify-between items-start flex-grow h-full">
-                                                {set.colors.map((color,i) => (
+                                                {set.pallette.map((color,i) => (
                                                     <div key={i} className="w-1/5 h-12">
-                                                        <ColorRectangle hex={Object.keys(color).toString()}/>
+                                                        <ColorRectangle hex={Object.values(color).toString()}/>
                                                     </div>
                                                 ))}
                                             </div>

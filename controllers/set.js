@@ -1,47 +1,97 @@
 const ErrorResponse = require('../utils/errorResponse')
 const asyncHandler = require('../middleware/async')
+
 const Set = require('../models/Set');
+
+const path = require('path')
+const fs = require('fs')
+const inkjet = require('inkjet');
+const chroma = require('chroma-js');
+const Vibrant = require('node-vibrant')
 
 // @desc    Create a set
 // @route   POST /api/v1/set/create
 // @access  Private
 exports.create = asyncHandler(async (req, res, next) => {
-    
+
     // Add user to req body
     req.body.user = req.user.id;
 
-    // TODO - Analyze image and return colors
-    const imageColors = () => {
-        // return [
-        //     {'#ED6B5A': ['#F18C7E','#EF7B6C','#ED6B5A','#EB5A47','#E94A35']},
-        //     {'#8CAE6F': ['#A0BD89','#96B67C','#8CAE6F','#82A762','#789D58']},
-        //     {'#F0EBA8': ['#F6F3CB','#F3EFBA','#F0EBA8','#EDE796','#EAE485']},
-        //     {'#9BC0BB': ['#B4D0CC','#A7C8C3','#9BC0BB','#8EB8B3','#82B0AB']},
-        //     {'#625C70': ['#766E87','#6C657B','#625C70','#585365','#4E495A']}
-        // ];
+    // Calculate colors
+    let hexColorArr;
+    let hueColorArrs = {
+        red: [],
+        orange: [],
+        yellow: [],
+        green: [],
+        blue: [],
+        magenta: [],
+    }
+    let fileType = path.extname(req.file.path);
 
-        // return [
-        //     {'#353535': ['#525252','#474747','#353535','#3D3D3D','#333333']},
-        //     {'#3C6E71': ['#4D9093','#468286','#3C6E71','#38686B','#315B5E']},
-        //     {'#A3A3A3': ['#B8B8B8','#ADADAD','#A3A3A3','#999999','#8F8F8F']},
-        //     {'#D9D9D9': ['#F5F5F5','#EBEBEB','#D9D9D9','#D6D6D6','#CCCCCC']},
-        //     {'#284B63': ['#356482','#2F5A74','#284B63','#234357','#1E3748']}
-        // ];
+    // Convert Uint8Array to array of hex values
+    function toHexString(byteArray) {
+        return byteArray.reduce((output, elem, i) => {
+            let hexString = (output + ('0' + elem.toString(16)).slice(-2))+'';
+            if((i+1)%4==0) {
+                return `${hexString}-#`
+            }
+            return hexString;
+        },['#'])
+    }
 
-        return [
-            {'#F6BD60': ['#F8CF8B','#F7C678','#ED6B5A','#F5B651','#F4AE3E']},
-            {'#F2E1CF': ['#FBF5EF','#F7EBDE','#F2E1CF','#EFD7BD','#EBCDAD']},
-            {'#F6CECB': ['#FCEFEE','#F9DEDC','#F6CECB','#F3BDB9','#F0ADA8']},
-            {'#84A59D': ['#A1BAB4','#95B1AB','#9BC0BB','#7EA098','#72978E']},
-            {'#F28482': ['#F7B6B5','#F5A5A3','#625C70','#F1807E','#EF6E6C']}
-        ];
+    // Color pallette for this image
+    let vibrantColors = []
+    await Vibrant.from(req.file.path).getPalette()
+        .then((palette) => {
+            for(let color in palette) {
+                const type = color
+
+                const population = palette[color].getPopulation()
+                const hsl = palette[color].getHsl()
+                const hex = palette[color].getHex()
+
+                vibrantColors.push({[type]: hex})
+                // console.log(vibrantColors)
+            }
+        })
+
+    // Get hue ranges from image
+    if(fileType === '.png') {
+        console.log('png')
+    } else if(fileType === '.jpg') {
+        const buf = fs.readFileSync(req.file.path);
+
+        imageByteArr = inkjet.decode(buf, (err, decoded) => {
+
+            const {data} = decoded;
+
+            // Array HEX-based color values from image data
+            hexColorArr = toHexString(Object.values(data)).split('-');
+
+            // Arrange colors into group based on Hue HSL value
+            hexColorArr.map((hexValue) => {
+                if(chroma.valid(hexValue)){
+                    let hslValue = chroma(hexValue).hsl();
+                    let hue = Math.ceil(hslValue[0]);
+
+                    if(hue >= 0 && hue <= 29)           {hueColorArrs.red.push(hslValue)} 
+                    else if(hue >= 30  && hue <= 59)    {hueColorArrs.orange.push(hslValue)}
+                    else if(hue >= 60  && hue <= 89)    {hueColorArrs.yellow.push(hslValue)}
+                    else if(hue >= 90  && hue <= 179)   {hueColorArrs.green.push(hslValue)}
+                    else if(hue >= 180 && hue <= 269)   {hueColorArrs.blue.push(hslValue)}
+                    else if(hue >= 270 && hue <= 359)   {hueColorArrs.magenta.push(hslValue)}
+                }
+            })
+        });
     }
 
     const set = await Set.create({
         name: req.body.name,
         image:  req.file.path,
         user: req.body.user,
-        colors: imageColors()
+        pallette: vibrantColors,
+        colorRange: hueColorArrs
     })
 
     res.status(200).json({ success: true, data: set });
@@ -53,7 +103,7 @@ exports.create = asyncHandler(async (req, res, next) => {
 exports.viewSet = asyncHandler(async (req, res, next) => {
 
     console.log(req.params.id);
-    const set = await Set.find({slug: req.params.id});
+    const set = await Set.find({slug: req.params.id}).populate('user');
 
     if (!set) {
         return next(
@@ -69,7 +119,7 @@ exports.viewSet = asyncHandler(async (req, res, next) => {
 // @route   GET /api/v1/set/
 // @access  Private
 exports.viewSets = asyncHandler(async (req, res, next) => {
-    const sets = await Set.find({});
+    const sets = await Set.find({}).populate('user');
     res.status(200).json({ success: true, data: sets });
 })
 

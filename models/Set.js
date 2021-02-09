@@ -10,8 +10,12 @@ const SetSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please add an image path.']
     },
-    colors: {
+    pallette: {
         type: Array,
+        required: [true, 'Please add add colors.']
+    },
+    colorRange: {
+        type: Object,
         required: [true, 'Please add add colors.']
     },
     createdAt: {
