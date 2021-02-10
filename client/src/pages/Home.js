@@ -37,7 +37,7 @@ const Home = ({history}) => {
         const formData = new FormData();
         formData.append('myImage',uploadedImage.file);
         formData.append('name',uploadedImage.name);
-        executeImage(formData)
+        executeImage({formData,history})
     }
 
     const handleImageUpload = (e) => {
@@ -95,7 +95,6 @@ const Home = ({history}) => {
         setSortSelect(e.target.value)
     }
 
-    console.log(data)
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto pt-12 pb-12"> 
