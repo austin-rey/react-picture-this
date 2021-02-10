@@ -1,7 +1,7 @@
 import React, {useContext,useState,useEffect} from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { createBrowserHistory } from "history";
-import { SessionContext, getSessionCookie, setSessionCookie } from "../util/session";
+import { BrowserRouter as Router, Route, Switch,useHistory } from 'react-router-dom'
+import AuthState from '../context/authState'
+import AuthContext from '../context/authContext';
 import Landing from '../pages/Landing'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
@@ -10,10 +10,9 @@ import ColorSet from '../pages/ColorSet'
 import Header from './Header'
 import Footer from './Footer'
 
-const history = createBrowserHistory();
 
 const ProtectedHandler = ({ history }) => {
-    const session = useContext(SessionContext);
+    const session = useContext(AuthContext);
 
     if (session === undefined) {
       history.push("/login");
@@ -23,17 +22,10 @@ const ProtectedHandler = ({ history }) => {
 
 const Routes = () => {
 
-    const [session, setSession] = useState(getSessionCookie());
-
-    useEffect(
-      () => {
-        setSession(getSessionCookie());
-      },
-      [session]
-    );
+    let history = useHistory();
 
     return (
-        <SessionContext.Provider value={session}>
+        <AuthState>
             <Router history={history}>
                 <Header history={history}/>
                 <Switch>
@@ -46,7 +38,7 @@ const Routes = () => {
                 </Switch>
                 <Footer/>
             </Router>
-        </SessionContext.Provider>
+        </AuthState>
     )
 }
 

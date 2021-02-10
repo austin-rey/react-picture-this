@@ -2,7 +2,7 @@ import React,{useState, useEffect,useContext} from 'react'
 import { Link } from 'react-router-dom'
 import { useGetColorSets } from '../hooks/sets/useGetColorSets'
 import { useUploadImage } from '../hooks/sets/useUploadImage'
-import { SessionContext } from "../util/session";
+import AuthContext from '../context/authContext';
 import Modal from 'react-modal';
 import ColorRectangle from '../components/ColorRectangle'
 import SetsToolbar from '../components/SetsToolbar'
@@ -45,15 +45,18 @@ const Home = ({history}) => {
     }
 
     // Session and Initial Loading ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    const session = useContext(SessionContext);
+    const session = useContext(AuthContext);
+    const {getToken}= session;
+
     useEffect(() => {
-        if(session === undefined) {
-            history.push('/login')
-        }else{
-            execute({history});
+        const tokenExists = getToken();
+        if(tokenExists != undefined){
+            execute();
+        } else {
+            history.push('/')
         }
-    }, [execute,session])
-    
+    }, [])
+
     // Modal ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const modalStyles = {
         content : {
@@ -105,8 +108,8 @@ const Home = ({history}) => {
                                 <Link to={`../set/${set.slug}`} key={i}>
                                     <div className="flex flex-row align-center py-10 px-6 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer hover:border-green-500">
                                         <div className="md:w-full lg:w-72 flex">
-                                            <div className="w-full h-full bg-gray-200">
-                                                <img className="w-full h-auto" src={set.image} alt={set.name}/>
+                                            <div className="w-full h-36 bg-gray-100">
+                                                <img className="h-full m-auto mh-05" src={set.image} alt={set.name}/>
                                             </div>
                                             
                                         </div>

@@ -1,7 +1,7 @@
 import React,{useState, useEffect,useContext} from 'react'
 import { Link,useParams } from 'react-router-dom'
 import { useGetColorSet } from '../hooks/sets/useGetColorSet'
-import { SessionContext } from "../util/session";
+import AuthContext from '../context/authContext';
 import ColorRectangle from '../components/ColorRectangle'
 import ColorRange from '../components/ColorRange'
 
@@ -15,17 +15,17 @@ const ColorSet = ({history}) => {
 
     let { id } = useParams();
 
-    const session = useContext(SessionContext);
-
+    const session = useContext(AuthContext);
+    const {getToken}= session;
     useEffect(() => {
-       if(session === undefined) {
-            history.push('/login')
-        }else{
+        const tokenExists = getToken();
+        if(tokenExists != undefined){
             execute(id);
+        } else {
+            history.push('/')
         }
-    }, [execute,session])
+    }, [])
 
-    console.log(data)
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto">
@@ -35,7 +35,7 @@ const ColorSet = ({history}) => {
                             <Link to="/sets">Back</Link>
                             <div className="flex flex-row justify-between items-center flex-grow px-2 pt-4">
                                 <div className="px-2 pt-2">
-                                    <h1 className="font-sans text-3xl">{data[0].name}</h1>
+                                    <h1 className="font-sans text-4xl">{data[0].name}</h1>
                                     <h6 className="font-sans text-md pb-2 text-gray-400">Created by: {data[0].user.name}</h6>
                                 </div>
                                 <div className="flex flex-row px-2">
@@ -45,13 +45,15 @@ const ColorSet = ({history}) => {
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center align-center p-4">
-                                <img src={data[0].image} alt="Uploaded image for this data set" className="mb-2" />
+                                <div className="w-full h-full bg-gray-100">
+                                <img src={data[0].image} alt="Uploaded image for this data set" className="m-auto" />
+                                </div>
                             </div>
                             <div className="flex flex-col justify-center align-center p-4">
                                 <h2 className="font-sans text-2xl pb-1">Pallette</h2>
                                 <h6 className="font-sans text-md pb-2 text-gray-400">Re-occurring colors found in your image.</h6>
 
-                                <div className="flex flex-row justify-items-stretch">
+                                <div className="flex flex-row justify-items-stretch my-6">
                                     {data[0].pallette.map((color,i) => (
                                         <div key={i} className="w-1/5 h-12">
                                             <ColorRectangle hex={Object.values(color).toString()}/>

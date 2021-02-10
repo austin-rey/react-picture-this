@@ -1,9 +1,9 @@
-import { useState,useCallback } from 'react';
+import { useState,useCallback,useContext } from 'react';
 import PropTypes from 'prop-types'
 import picturethis from '../../api/picturethis'
-import { setSessionCookie } from "../../util/session"
+import AuthContext from '../../context/authContext';
 
-export const loginUser = async ({loginUser, history}) => {
+export const loginUser = async ({loginUser}) => {
   const response = await picturethis.post('auth/login', 
   {
     email: loginUser.email,
@@ -25,13 +25,15 @@ export const useLoginUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
-  
+  const session = useContext(AuthContext);
+  const {addToken} = session;
+
   const execute = async (options = {}) => {
     try {
       setIsLoading(true);
       const results = await loginUser(options);
       setData(results);
-      setSessionCookie(results.data.token)
+      await addToken(results.data.token)
       options.history.push('/sets')
       return results;
     } catch (error) {

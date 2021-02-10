@@ -1,7 +1,8 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect, useContext} from 'react'
 import { BrowserRouter as Router,Link } from 'react-router-dom'
 import { useRegisterUser } from '../hooks/auth/useRegisterUser'
 import RegisterForm from '../components/RegisterForm'
+import AuthContext from '../context/authContext';
 
 const Register = ({history}) => {
 
@@ -28,6 +29,16 @@ const Register = ({history}) => {
         e.preventDefault();
         execute({registerUser,history})
     }
+
+    const session = useContext(AuthContext);
+    const {getToken}= session;
+    useEffect(() => {
+        const tokenExists = getToken();
+        if(tokenExists != undefined){
+            history.push('/sets')
+        }
+    }, [])
+
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto">

@@ -1,17 +1,25 @@
 import React,{useContext} from 'react'
 import { Link } from 'react-router-dom'
-
-import {deleteSessionCookie} from '../util/session';
-
-import { SessionContext } from "../util/session";
+import { withRouter } from "react-router";
+import AuthContext from "../context/authContext";
 
 const Header = ({history}) => {
 
-    const session = useContext(SessionContext);
+    const session = useContext(AuthContext);
+    const {deleteToken,token}= session;
 
-    console.log(history)
+    // useEffect(() => {
+    //     const tokenExists = getToken();
+    //     if(tokenExists != undefined){
+    //         execute();
+    //     } else {
+    //         history.push('/')
+    //     }
+
+    // }, [])
+    
     const logoutUser = () => {
-        deleteSessionCookie();
+        deleteToken()
         history.push('/')
     }
 
@@ -24,14 +32,14 @@ const Header = ({history}) => {
                     </div>
                     <div className="flex flex-row">
                         <p><Link to="/" className="p-2 text-white font-sans text-sm">Home</Link></p>
-                        {(!session)
+                        {(!token)
                         ?(<>
                             <p><Link to="/login" className="p-2 text-white font-sans text-sm">Login</Link></p>
                             <p><Link to="/register" className="p-2 text-white font-sans text-sm">Register</Link></p>
                         </>)
                         :<>
                             <p><Link to="/sets" className="p-2 text-white font-sans text-sm">Sets</Link></p>
-                            <p onClick={logoutUser}><Link to="/" className="p-2 text-white font-sans text-sm">Logout</Link></p>
+                            <p onClick={logoutUser}><Link className="p-2 text-white font-sans text-sm">Logout</Link></p>
                         </>
                         }
                     </div>
@@ -42,4 +50,4 @@ const Header = ({history}) => {
     )
 }
 
-export default Header
+export default withRouter(Header)

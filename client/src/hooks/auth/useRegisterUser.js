@@ -1,6 +1,7 @@
-import { useState,useCallback } from 'react';
+import { useState,useCallback,useContext } from 'react';
 import PropTypes from 'prop-types'
 import picturethis from '../../api/picturethis'
+import AuthContext from '../../context/authContext';
 
 export const registerUser = async ({registerUser}) => {
   const response = await picturethis.post(
@@ -27,12 +28,16 @@ export const useRegisterUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
-  
+  const session = useContext(AuthContext);
+  const {addToken} = session;
+
   const execute = async (options = {}) => {
     try {
       setIsLoading(true);
       const results = await registerUser(options);
       setData(results);
+      await addToken(results.data.token)
+      options.history.push('/sets')
       return results;
     } catch (error) {
       console.log(error)
