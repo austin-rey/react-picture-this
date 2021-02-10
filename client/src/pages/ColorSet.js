@@ -61,44 +61,31 @@ const ColorSet = ({history}) => {
                             </div>
                             <div className="flex flex-col p-4">
                                 <h2 className="font-sans text-2xl pb-1">Colors By Hue</h2>
-                                <h6 className="font-sans text-md pb-2 text-gray-400">Color scales found in your image based off <a className="underline text-green-500" href="https://www.december.com/html/spec/colorhsltable.html" target="_blank">hue ranges</a>.</h6>
-                                <div className="my-2">
+                                <h6 className="font-sans text-md pb-2 text-gray-400">Color scales found in your image based off <a className="underline text-green-500" href="https://www.december.com/html/spec/colorhsltable.html" target="_blank">hue ranges</a>. Click a color to copy its hex value.</h6>
+                                <div className="my-6">
                                     <h6 className="font-sans text-md pb-2">Red <span className="font-sans text-sm pb-2 text-gray-400">&deg;0 - &deg;29</span></h6>
                                     <ColorRange colorArr={data[0].colorRange.red} />
                                 </div>
-                                <div className="my-2">
+                                <div className="my-6">
                                     <h6 className="font-sans text-md pb-2">Orange <span className="font-sans text-sm pb-2 text-gray-400">&deg;30 - &deg;59</span></h6>
                                     <ColorRange colorArr={data[0].colorRange.orange} />
                                 </div>
-                                <div className="my-2">
+                                <div className="my-6">
                                     <h6 className="font-sans text-md pb-2">Yellow <span className="font-sans text-sm pb-2 text-gray-400">&deg;60 - &deg;89</span></h6>
                                     <ColorRange colorArr={data[0].colorRange.yellow} />
                                 </div>
-                                <div className="my-2">
+                                <div className="my-6">
                                     <h6 className="font-sans text-md pb-2">Green <span className="font-sans text-sm pb-2 text-gray-400">&deg;90 - &deg;179</span></h6>
                                     <ColorRange colorArr={data[0].colorRange.green} />
                                 </div>
-                                <div className="my-2">
+                                <div className="my-6">
                                     <h6 className="font-sans text-md pb-2">Blue <span className="font-sans text-sm pb-2 text-gray-400"> &deg;180 - &deg;269</span></h6>
                                     <ColorRange colorArr={data[0].colorRange.blue} />
                                 </div>
-                                <div className="my-2">
+                                <div className="my-6">
                                     <h6 className="font-sans text-md pb-2">Magenta <span className="font-sans text-sm pb-2 text-gray-400">&deg;270 - &deg;359</span></h6>
                                     <ColorRange colorArr={data[0].colorRange.magenta} />
                                 </div>
-                            </div>
-                            <div className="flex flex-col p-4">
-                                <h2 className="font-sans text-2xl pb-1">Gradient Picker</h2>
-                                <h6 className="font-sans text-md pb-2 text-gray-400">Generates css style code per gradient.</h6>
-                                {/* 
-                                    Gradient Type 
-                                        Radial
-                                        Linear
-                                    Supported Values
-                                        (angle, startColor, stopColor)
-                                            angle - '217deg'
-                                            startColor stopColor - #232122 50%
-                                */}
                             </div>
                         </>
                         }

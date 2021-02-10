@@ -74,14 +74,15 @@ exports.create = asyncHandler(async (req, res, next) => {
             hexColorArr.map((hexValue) => {
                 if(chroma.valid(hexValue)){
                     let hslValue = chroma(hexValue).hsl();
-                    let hue = Math.ceil(hslValue[0]);
+                    let hue = hslValue[0];
+                    let saturation = hslValue[1];
 
-                    if(hue >= 0 && hue <= 29)           {hueColorArrs.red.push(hslValue)} 
-                    else if(hue >= 30  && hue <= 59)    {hueColorArrs.orange.push(hslValue)}
-                    else if(hue >= 60  && hue <= 89)    {hueColorArrs.yellow.push(hslValue)}
-                    else if(hue >= 90  && hue <= 179)   {hueColorArrs.green.push(hslValue)}
-                    else if(hue >= 180 && hue <= 269)   {hueColorArrs.blue.push(hslValue)}
-                    else if(hue >= 270 && hue <= 359)   {hueColorArrs.magenta.push(hslValue)}
+                    if(hue >= 0 && hue <= 29 && saturation>=.1)           {hueColorArrs.red.push(hslValue)} 
+                    else if(hue >= 30  && hue <= 59 && saturation>=.1)    {hueColorArrs.orange.push(hslValue)}
+                    else if(hue >= 60  && hue <= 89 && saturation>=.1)    {hueColorArrs.yellow.push(hslValue)}
+                    else if(hue >= 90  && hue <= 179 && saturation>=.1)   {hueColorArrs.green.push(hslValue)}
+                    else if(hue >= 180 && hue <= 269 && saturation>=.1)   {hueColorArrs.blue.push(hslValue)}
+                    else if(hue >= 270 && hue <= 359 && saturation>=.1)   {hueColorArrs.magenta.push(hslValue)}
                 }
             })
         });

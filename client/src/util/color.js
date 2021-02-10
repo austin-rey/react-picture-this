@@ -1,3 +1,5 @@
+import chroma from 'chroma-js'
+
 // Return a contrasting color
 export const invertColor = (hex, bw) => {
     if (hex.indexOf('#') === 0) {
@@ -15,7 +17,7 @@ export const invertColor = (hex, bw) => {
         b = parseInt(hex.slice(4, 6), 16);
     if (bw) {
         // http://stackoverflow.com/a/3943023/112731
-        return (r * 0.299 + g * 0.587 + b * 0.114) > 186
+        return (r * 0.299 + g * 0.587 + b * 0.114) > 180
             ? '#000000'
             : '#FFFFFF';
     }
@@ -30,4 +32,8 @@ function padZero(str, len) {
     len = len || 2;
     var zeros = new Array(len).join('0');
     return (zeros + str).slice(-len);
+}
+
+export const getAverageColor = (colorArr) => {
+    return chroma.average(colorArr);
 }
