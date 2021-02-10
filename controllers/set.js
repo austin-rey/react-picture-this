@@ -90,7 +90,7 @@ exports.create = asyncHandler(async (req, res, next) => {
 
     // Create a url to serve image in static folder
     const hostname = req.headers.host;
-    const staticImagePath = `http://${hostname}/images/${req.file.filename}`
+    const staticImagePath = `/images/${req.file.filename}`
 
     const set = await Set.create({
         name: req.body.name,
