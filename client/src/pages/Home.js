@@ -106,7 +106,7 @@ const Home = ({history}) => {
                                     <div className="flex flex-row align-center py-10 px-6 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer hover:border-green-500">
                                         <div className="md:w-full lg:w-72 flex">
                                             <div className="w-full h-full bg-gray-200">
-                                                {/* <img className="w-full h-auto" src="https://via.placeholder.com/300x250.png" alt={set.name}/> */}
+                                                <img className="w-full h-auto" src={set.image} alt={set.name}/>
                                             </div>
                                             
                                         </div>

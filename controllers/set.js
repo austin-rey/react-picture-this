@@ -27,6 +27,7 @@ exports.create = asyncHandler(async (req, res, next) => {
         blue: [],
         magenta: [],
     }
+
     let fileType = path.extname(req.file.path);
 
     // Convert Uint8Array to array of hex values
@@ -86,9 +87,13 @@ exports.create = asyncHandler(async (req, res, next) => {
         });
     }
 
+    // Create a url to serve image in static folder
+    const hostname = req.headers.host;
+    const staticImagePath = `http://${hostname}/images/${req.file.filename}`
+
     const set = await Set.create({
         name: req.body.name,
-        image:  req.file.path,
+        image:  staticImagePath,
         user: req.body.user,
         pallette: vibrantColors,
         colorRange: hueColorArrs
@@ -119,7 +124,7 @@ exports.viewSet = asyncHandler(async (req, res, next) => {
 // @route   GET /api/v1/set/
 // @access  Private
 exports.viewSets = asyncHandler(async (req, res, next) => {
-    const sets = await Set.find({}).populate('user');
+    const sets = await Set.find({}).select('-colorRange').populate('user');
     res.status(200).json({ success: true, data: sets });
 })
 

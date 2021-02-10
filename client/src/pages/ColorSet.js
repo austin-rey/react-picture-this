@@ -45,7 +45,7 @@ const ColorSet = ({history}) => {
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center align-center p-4">
-                                <img src="https://via.placeholder.com/800x600.png" alt="Uploaded image for this data set" className="mb-2" />
+                                <img src={data[0].image} alt="Uploaded image for this data set" className="mb-2" />
                             </div>
                             <div className="flex flex-col justify-center align-center p-4">
                                 <h2 className="font-sans text-2xl pb-1">Pallette</h2>

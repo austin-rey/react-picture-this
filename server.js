@@ -39,6 +39,7 @@ app.use(cookieParser());
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(__dirname + '/public/uploadedImages'));
 
 // Mount Routers
 app.use('/api/v1/auth', auth);
