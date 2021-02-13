@@ -36,6 +36,11 @@ module.exports = {
       serif: ['Merriweather', 'serif'],
     }
   },
-  variants: {},
+  variants: {
+    extend: {
+      opacity: ['disabled'],
+      cursor: ['disabled'],
+    }
+  },
   plugins: [],
 }

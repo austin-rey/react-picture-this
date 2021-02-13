@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-const SetsToolbar = ({searchQuery,searchChange,sortSelect,sortChange}) => {
+const SetsToolbar = ({searchQuery,searchChange,sortSelect,sortChange,openModal}) => {
     return (
         <div className="flex flex-row justify-between mx-6">
             <div className="flex flex-grow flex-col mr-5">
@@ -15,6 +15,7 @@ const SetsToolbar = ({searchQuery,searchChange,sortSelect,sortChange}) => {
                     <option value="Creator">Creator</option>
                 </select>
             </div>
+            <button onClick={openModal} className="bg-green-700 text-white rounded-md ml-5 p-4 font-bold">Create Set</button>
         </div>
     )
 }

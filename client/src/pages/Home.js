@@ -6,6 +6,7 @@ import AuthContext from '../context/authContext';
 import Modal from 'react-modal';
 import ColorRectangle from '../components/ColorRectangle'
 import SetsToolbar from '../components/SetsToolbar'
+import {RiCloseCircleFill} from "react-icons/ri"
 
 const Home = ({history}) => {
     const { 
@@ -24,8 +25,8 @@ const Home = ({history}) => {
     } = useUploadImage();
 
     const [uploadedImage, setUploadedImage] = useState({
-        name: "",
-        file: ""
+        name: undefined,
+        file: undefined
     })
 
     const nameChange = (e) => {
@@ -60,13 +61,12 @@ const Home = ({history}) => {
     // Modal ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const modalStyles = {
         content : {
-            top                   : '50%',
+            top                   : '40%',
             left                  : '50%',
             right                 : 'auto',
             bottom                : 'auto',
             marginRight           : '-50%',
             transform             : 'translate(-50%, -50%)',
-            width                 : '80vw',
             display               : 'flex',
             flexDirection         : 'column',
             maxWidth              : '900px',
@@ -100,7 +100,7 @@ const Home = ({history}) => {
             <div className="container w-full mx-auto pt-12 pb-12"> 
                 <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md">
                     <h1 className="font-sans text-3xl p-4">Welcome Back, User</h1>
-                    <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange}/>
+                    <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange} openModal={openModal}/>
                     <div className="flex flex-col justify-center align-center p-6">
                         {data &&
                             data.map((set,i) => (
@@ -130,32 +130,37 @@ const Home = ({history}) => {
                             ))
                         }
                         <div className="flex flex-col align-center py-6 px-6 my-2 text-center border-4 border-gray-500 border-opacity-20 rounded-md">
-                            <button onClick={openModal} className="bg-green-700 text-white rounded-md p-4 font-bold">Create New</button>
+                            <button onClick={openModal} className="bg-green-700 text-white rounded-md p-4 font-bold">Create Set</button>
                         </div>
-                        <Modal
-                            isOpen={modalIsOpen}
-                            onRequestClose={closeModal}
-                            style={modalStyles}
-                            contentLabel="EUpload Image Modal"
-                        >
-                            <div className="flex flex-row justify-between items-start">
-                            <h2 className="font-sans text-2xl pb-2">Create a New Set</h2>
-                            <button onClick={closeModal}>close</button>
-                            </div>
-                            <form onSubmit={imageSubmit} encType="multipart/form-data" className="w-96">
-                                <div className="mb-6">
-                                    <p className="w-full py-2 text-left text-lg">Set Name</p>
-                                    <input type="text" id="name-field" name="name" placeholder="Enter a set name..." value={uploadedImage.name} className="w-full p-2 rounded-md border-4 border-green-500 border-opacity-50 focus:border-opacity-100 outline-none" onChange={nameChange}/>
-                                </div>
-                                <div>
-                                    <input className="mb-6 text-center flex mb-4" type="file" id="image-upload-button" name="setImage" accept="image/png, image/jpeg" onChange={handleImageUpload}/>
-                                </div>
-                                <input type="submit" value="Submit" className="w-full p-2 bg-green-700 text-white rounded-md cursor-pointer"/>
-                            </form>
-                        </Modal>
                     </div>
                 </div>
             </div>
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={modalStyles}
+                contentLabel="EUpload Image Modal"
+            >
+                <div className="p-6">
+                    <div className="flex flex-row justify-between items-start divide-black mb-2">
+                        <h2 className="font-sans text-2xl pb-2">Create a New Set</h2>
+                        <button className="p-1 text-white rounded-lg" onClick={closeModal}><RiCloseCircleFill className="text-gray-700 w-6 h-6"/></button>
+                    </div>
+                    <form onSubmit={imageSubmit} encType="multipart/form-data" className="w-96">
+                        <div className="mb-6">
+                            <p className="w-full py-2 text-left text-lg">Name</p>
+                            <p className="font-sans text-xs pb-2 text-yellow-500"> Must be 6 - 64 characters</p>
+                            <input type="text" id="name-field" name="name" placeholder="Enter a set name..." value={uploadedImage.name} className="w-full p-2 rounded-md border-4  border-gray-500 border-opacity-20 focus:border-green-500 outline-none" onChange={nameChange}/>
+                        </div>
+                        <div className="mb-6">
+                            <p className="w-full py-2 text-left text-lg">Image</p>
+                            <p className="font-sans text-xs pb-2 text-yellow-500">JPEG/PNG - 3 MB Limit</p>
+                            <input className="text-center flex mb-4 bg-gray-100 p-1 rounded-md w-full" type="file" id="image-upload-button" name="setImage" accept="image/png, image/jpeg" onChange={handleImageUpload}/>
+                        </div>
+                        <input disabled={(uploadedImage.file !== undefined && uploadedImage.name.length>=6 && uploadedImage.name.length<=64)?false:true} type="submit" value="Upload" className="w-full p-2 bg-green-700 text-white rounded-md cursor-pointer opacity-100 disabled:opacity-50 disabled:cursor-not-allowed"/>
+                    </form>
+                </div>
+            </Modal>
         </div>
     )
 }
