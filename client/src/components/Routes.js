@@ -1,5 +1,5 @@
 import React, {useContext,useState,useEffect} from 'react'
-import { BrowserRouter as Router, Route, Switch,useHistory } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch,useHistory,Redirect } from 'react-router-dom'
 import AuthState from '../context/authState'
 import AuthContext from '../context/authContext';
 import Landing from '../pages/Landing'
@@ -34,7 +34,7 @@ const Routes = () => {
                     <Route exact path='/register' component={Register}/>
                     <Route exact path='/sets' component={Home}/>
                     <Route exact path='/set/:id' component={ColorSet}/>
-                    <Route exact path="*" component={ProtectedHandler}/>
+                    <Redirect to='/' />
                 </Switch>
                 <Footer/>
             </Router>
