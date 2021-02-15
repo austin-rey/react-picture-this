@@ -10,9 +10,9 @@ const SetsToolbar = ({searchQuery,searchChange,sortSelect,sortChange,openModal})
             <div className="flex flex-col">
                 <p className="w-full py-2 text-left text-lg pl-1">Sort By</p>
                 <select id="setSort" name="Sort" value={sortSelect} onChange={sortChange} className="p-2 rounded-md border-4 border-gray-500 border-opacity-20 focus:border-green-500 outline-none h-full cursor-pointer hover:border-green-500">
-                    <option value="Newest">Newest</option>
-                    <option value="Oldest">Oldest</option>
-                    <option value="Creator">Creator</option>
+                    <option value="User">User (a - z)</option>
+                    <option value="SetName">Set Name (a - z)</option>
+                    <option value="Created">Created Date (newest)</option>
                 </select>
             </div>
             <button onClick={openModal} className="bg-green-700 text-white rounded-md ml-5 p-4 font-bold">Create Set</button>

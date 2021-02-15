@@ -77,19 +77,18 @@ exports.create = asyncHandler(async (req, res, next) => {
                     let hue = hslValue[0];
                     let saturation = hslValue[1];
 
-                    if(hue >= 0 && hue <= 29 && saturation>=.1)           {hueColorArrs.red.push(hslValue)} 
-                    else if(hue >= 30  && hue <= 59 && saturation>=.1)    {hueColorArrs.orange.push(hslValue)}
-                    else if(hue >= 60  && hue <= 89 && saturation>=.1)    {hueColorArrs.yellow.push(hslValue)}
-                    else if(hue >= 90  && hue <= 179 && saturation>=.1)   {hueColorArrs.green.push(hslValue)}
-                    else if(hue >= 180 && hue <= 269 && saturation>=.1)   {hueColorArrs.blue.push(hslValue)}
-                    else if(hue >= 270 && hue <= 359 && saturation>=.1)   {hueColorArrs.magenta.push(hslValue)}
+                    if(hue >= 0 && hue <= 29 && saturation>=.1 && hueColorArrs.red.length<=200){hueColorArrs.red.push(hslValue)} 
+                    else if(hue >= 30  && hue <= 59 && saturation>=.1 && hueColorArrs.orange.length<=200)    {hueColorArrs.orange.push(hslValue)}
+                    else if(hue >= 60  && hue <= 89 && saturation>=.1 && hueColorArrs.yellow.length<=200)    {hueColorArrs.yellow.push(hslValue)}
+                    else if(hue >= 90  && hue <= 179 && saturation>=.1 && hueColorArrs.green.length<=200)   {hueColorArrs.green.push(hslValue)}
+                    else if(hue >= 180 && hue <= 269 && saturation>=.1 && hueColorArrs.blue.length<=200)   {hueColorArrs.blue.push(hslValue)}
+                    else if(hue >= 270 && hue <= 359 && saturation>=.1 && hueColorArrs.magenta.length<=200)   {hueColorArrs.magenta.push(hslValue)}
                 }
             })
         });
     }
 
     // Create a url to serve image in static folder
-    const hostname = req.headers.host;
     const staticImagePath = `/images/${req.file.filename}`
 
     const set = await Set.create({
@@ -126,7 +125,7 @@ exports.viewSet = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.viewSets = asyncHandler(async (req, res, next) => {
     const sets = await Set.find({}).select('-colorRange').populate('user');
-    res.status(200).json({ success: true, data: sets });
+    res.status(200).json(res.advancedResults);
 })
 
 // @desc    Delete a set

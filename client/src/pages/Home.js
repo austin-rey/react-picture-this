@@ -7,6 +7,7 @@ import Modal from 'react-modal';
 import ColorRectangle from '../components/ColorRectangle'
 import SetsToolbar from '../components/SetsToolbar'
 import {RiCloseCircleFill} from "react-icons/ri"
+import ReactPaginate from 'react-paginate';
 
 const Home = ({history}) => {
     const { 
@@ -52,7 +53,10 @@ const Home = ({history}) => {
     useEffect(() => {
         const tokenExists = getToken();
         if(tokenExists != undefined){
-            execute();
+            execute({
+                paginationOptions,
+                sortSelect,
+                searchQuery});
         } else {
             history.push('/')
         }
@@ -88,22 +92,52 @@ const Home = ({history}) => {
     const [searchQuery, setSearchQuery] = useState('')
     const searchChange = (e) => {
         setSearchQuery(e.target.value)
+        execute({
+            paginationOptions,
+            sort: sortSelect,
+            searchQuery: e.target.value,
+        })
     }
 
-    const [sortSelect, setSortSelect] = useState('Creator')
+    const [sortSelect, setSortSelect] = useState('SetName')
     const sortChange = (e) => {
         setSortSelect(e.target.value)
+        execute({
+            paginationOptions,
+            searchQuery,
+            sort: e.target.value
+        })
+    }
+
+    // Pagination ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    const [paginationOptions, setPaginationOptions] = useState({
+        limit: '10',
+        page: '1'
+    })
+
+    const pageChange = (data) => {
+        console.log(data)
+        setPaginationOptions((prevOptions) => ({
+            ...prevOptions,
+            page: data.selected+1
+        }));
+        execute({
+            paginationOptions,
+            sort: sortSelect,
+            searchQuery,
+            page: data.selected+1
+        })
     }
 
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto pt-12 pb-12"> 
                 <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md">
-                    <h1 className="font-sans text-3xl p-4">Welcome Back, User</h1>
+                    <h1 className="font-sans text-3xl pt-6 pb-10 px-6">Welcome Back, User</h1>
                     <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange} openModal={openModal}/>
                     <div className="flex flex-col justify-center align-center p-6">
-                        {data &&
-                            data.map((set,i) => (
+                        {(data) && <>
+                            {data.data.map((set,i) => (
                                 <Link to={`../set/${set.slug}`} key={i}>
                                     <div className="flex flex-row align-center py-10 px-6 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer hover:border-green-500">
                                         <div className="md:w-full lg:w-72 flex">
@@ -127,11 +161,26 @@ const Home = ({history}) => {
                                         </div>
                                     </div>
                                 </Link>
-                            ))
-                        }
-                        <div className="flex flex-col align-center py-6 px-6 my-2 text-center border-4 border-gray-500 border-opacity-20 rounded-md">
-                            <button onClick={openModal} className="bg-green-700 text-white rounded-md p-4 font-bold">Create Set</button>
+                            ))}
+                            <div className="flex flex-col align-center py-6 px-6 my-2 text-center bg-gray-100 rounded-md">
+                            <ReactPaginate
+                                previousLabel={"Previous"}
+                                nextLabel={"Next"}
+                                initialPage={0}
+                                pageCount={data.pagination.totalPages}
+                                onPageChange={pageChange}
+                                containerClassName={"pagination flex flex-row items-center justify-center font-bold"}
+                                previousLinkClassName={"bg-green-700 text-white rounded-md p-5 m-2"}
+                                nextLinkClassName={"bg-green-700 text-white rounded-md p-5 m-2"}
+                                disabledClassName={"pagination__link--disabled opacity-50 cursor-not-allowed"}
+                                activeClassName={"pagination__link--active text-white"}
+                                pageLinkClassName={"bg-white text-green-700 rounded-md p-4 m-2 border-4 border-green-700 border-opacity-50 hover:border-opacity-100"}
+                                activeLinkClassName={""}
+                            />
+
                         </div>
+                        </>
+                        }
                     </div>
                 </div>
             </div>
@@ -157,7 +206,7 @@ const Home = ({history}) => {
                             <p className="font-sans text-xs pb-2 text-yellow-500">JPEG/PNG - 3 MB Limit</p>
                             <input className="text-center flex mb-4 bg-gray-100 p-1 rounded-md w-full" type="file" id="image-upload-button" name="setImage" accept="image/png, image/jpeg" onChange={handleImageUpload}/>
                         </div>
-                        <input disabled={(uploadedImage.file !== undefined && uploadedImage.name.length>=6 && uploadedImage.name.length<=64)?false:true} type="submit" value="Upload" className="w-full p-2 bg-green-700 text-white rounded-md cursor-pointer opacity-100 disabled:opacity-50 disabled:cursor-not-allowed"/>
+                        <input disabled={(uploadedImage.file !== undefined && uploadedImage.name.length>=6 && uploadedImage.name.length<=64)?false:true} type="submit" value="Upload" className="font-bold w-full p-2 bg-green-700 text-white rounded-md cursor-pointer opacity-100 disabled:opacity-50 disabled:cursor-not-allowed"/>
                     </form>
                 </div>
             </Modal>

@@ -2,13 +2,16 @@ import { useState,useCallback } from 'react';
 
 import PropTypes from 'prop-types'
 
-import axios from "axios";
-
 import picturethis from '../../api/picturethis'
 
-export const getColorSets = async () => {
-  const response = await picturethis.get('set/',{ withCredentials: true });
-  return response.data.data;
+export const getColorSets = async ({paginationOptions,searchQuery="",sort="SetName",page="1"}) => {
+
+  // Sanitize sort to follow mongodb operators syntax
+  const response = await picturethis.get(`set/?q=${searchQuery}&sort=${sort}&page=${page}&limit=${paginationOptions.limit}&select=-colorRange`,{ withCredentials: true });
+
+  console.log(response.data)
+
+  return response.data;
 }
 
 getColorSets.propTypes = {
