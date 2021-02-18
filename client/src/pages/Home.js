@@ -116,7 +116,7 @@ const Home = ({history}) => {
     })
 
     const pageChange = (data) => {
-        console.log(data)
+        window.scroll(0,0);
         setPaginationOptions((prevOptions) => ({
             ...prevOptions,
             page: data.selected+1
@@ -133,27 +133,24 @@ const Home = ({history}) => {
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto pt-12 pb-12"> 
                 <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md">
-                    <h1 className="font-sans text-3xl pt-6 pb-10 px-6">Welcome Back, User</h1>
+                    <h1 className="text-center font-sans text-3xl pt-6 pb-10 px-6 md:text-left">Welcome Back, User</h1>
                     <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange} openModal={openModal}/>
                     <div className="flex flex-col justify-center align-center p-6">
                         {(data) && <>
                             {data.data.map((set,i) => (
                                 <Link to={`../set/${set.slug}`} key={i}>
-                                    <div className="flex flex-row align-center py-10 px-6 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer hover:border-green-500">
-                                        <div className="md:w-full lg:w-72 flex">
-                                            <div className="w-full h-36 bg-gray-100">
-                                                <img className="h-full m-auto mh-05" src={set.image} alt={set.name}/>
-                                            </div>
-                                            
+                                    <div className="flex flex-col text-center align-center p-4 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer md:flex-row md:text-left md:py-6 md:px-6 hover:border-green-500">
+                                        <div className="w-full lg:w-72 h-36 bg-gray-100">
+                                            <img className="h-full m-auto mh-05" src={set.image} alt={set.name}/>
                                         </div>
-                                        <div className="flex flex-col py-1 pl-4 content-between md:w-full lg:flex-grow">
-                                            <div>
+                                        <div className="flex flex-col py-1 md:pl-4 content-between md:w-full lg:flex-grow">
+                                            <div className="sm:py-2">
                                                 <h2 className="font-sans text-2xl pb-2">{set.name}</h2>
                                                 <h6 className="font-sans text-md pb-2 text-gray-400">Created By: {set.user.name}</h6>
                                             </div>
-                                            <div className="flex flex-row justify-between items-start flex-grow h-full">
+                                            <div className="flex flex-col md:flex-row justify-between items-start flex-grow h-full">
                                                 {set.pallette.map((color,i) => (
-                                                    <div key={i} className="w-1/5 h-12">
+                                                    <div key={i} className="w-full md:w-1/5 h-12">
                                                         <ColorRectangle hex={Object.values(color).toString()}/>
                                                     </div>
                                                 ))}

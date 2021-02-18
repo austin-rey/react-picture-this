@@ -32,7 +32,7 @@ const ColorSet = ({history}) => {
                 <div className="flex flex-col justify-center align-center p-6">
                     <div className="m-6 p-10 bg-white shadow-lg rounded-md">
                         {data && <>
-                            <Link to="/sets">Back</Link>
+                            <Link className="underline text-green-500" to="/sets">Back</Link>
                             <div className="flex flex-row justify-between items-center flex-grow px-2 pt-4">
                                 <div className="px-2 pt-2">
                                     <h1 className="font-sans text-4xl">{data[0].name}</h1>
@@ -40,8 +40,6 @@ const ColorSet = ({history}) => {
                                 </div>
                                 <div className="flex flex-row px-2">
                                     <input type="button" value="Delete" className="w-full px-4 py-2 m-1 bg-red-600 text-white rounded-md cursor-pointer"/>
-                                    <input type="button" value="Edit" className="w-full px-4 py-2 m-1 bg-yellow-500 text-white rounded-md cursor-pointer"/>
-                                    <input type="button" value="Save" className="w-full px-4 py-2 m-1 bg-green-700 text-white rounded-md cursor-pointer"/>
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center align-center p-4">
