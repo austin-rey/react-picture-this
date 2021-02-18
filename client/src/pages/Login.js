@@ -41,15 +41,12 @@ const Login = ({history}) => {
     }, [data])
     return (
         <div className="root h-full bg-green-700">
-            <div className="container w-full mx-auto">
-                <div className="flex flex-col justify-center align-left text-center py-10 px-6">
-                    <div className="m-6 p-10 bg-white shadow-lg rounded-md">
-                        <h1 className="font-sans text-4xl p-4 text-left">Login</h1>
-                        <LoginForm onChange={updateLoginForm} formFields={loginUser} onSubmit={submitLoginUser}/>
-                    </div>
+            <div className="container w-full md:w-2/3 lg:w-2/3 xl:w-1/3 mx-auto pt-12 pb-12"> 
+                <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md">
+                    <h1 className="font-sans text-4xl p-4 text-left">Login</h1>
+                    <LoginForm onChange={updateLoginForm} formFields={loginUser} onSubmit={submitLoginUser}/>
                 </div>
             </div>
-            
         </div>
     )
 }

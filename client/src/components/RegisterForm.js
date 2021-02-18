@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 const RegisterForm = ({onChange,formFields,onSubmit}) => {
     return (
-        <form className="root flex flex-col align-items-stretch" onSubmit={onSubmit}>
+        <form className="root flex flex-col" onSubmit={onSubmit}>
             <div className="m-5">
                 <p className="w-full py-2 text-left text-lg">Name</p>
                 <input type="text" id="name-field" name="username" placeholder="Enter a valid name..." className="w-full p-2 rounded-md border-4 border-green-500 border-opacity-50 focus:border-opacity-100 outline-none" value={formFields.username} onChange={onChange}/>
