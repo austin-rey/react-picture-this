@@ -12,15 +12,14 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     removeFields.forEach((param) => delete reqQuery[param]);
   
     // Create query string
-    // let queryStr = Object.values(reqQuery).toString();
-    let queryStr = JSON.stringify(Object.values(reqQuery));
-  
-    // Finding resources by query string
-    // if(queryStr.length > 0){
-    //   query = model.find({name: queryStr});
-    // } else {
-    //   query = model.find({});
-    // }
+    let queryStr = Object.values(reqQuery).toString();
+
+    // Finding resources by query string - /\BqueryStr|queryStr\B/
+    if(queryStr.length > 0){
+      query = model.find({$text: {$search: queryStr}});
+    } else {
+      query = model.find({});
+    }
     
     // Select fields
     if (req.query.select) {
@@ -29,10 +28,11 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     }
 
     // Sort fields
+    console.log(req.query.sort)
     if (req.query.sort) {
       query = query.sort(req.query.sort);
     } else {
-      query = query.sort('-createdAt');
+      query = query.sort('+createdAt');
     }
   
     // Pagination
