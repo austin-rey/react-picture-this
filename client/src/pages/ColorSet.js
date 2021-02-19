@@ -1,6 +1,7 @@
 import React,{useState, useEffect,useContext} from 'react'
 import { Link,useParams } from 'react-router-dom'
 import { useGetColorSet } from '../hooks/sets/useGetColorSet'
+import { useDeleteSet } from '../hooks/sets/useDeleteSet'
 import AuthContext from '../context/authContext';
 import ColorRectangle from '../components/ColorRectangle'
 import ColorRange from '../components/ColorRange'
@@ -13,7 +14,18 @@ const ColorSet = ({history}) => {
         execute
     } = useGetColorSet();
 
+    const { 
+        isLoading: isLoadingDelete,
+        data: dataDelete,
+        error: errorDelete,
+        execute: executeDelete
+    } = useDeleteSet();
+
     let { id } = useParams();
+
+    const deleteSet = (e) => {
+        executeDelete({id: data[0]._id, history})
+    }
 
     const session = useContext(AuthContext);
     const {getToken}= session;
@@ -26,6 +38,7 @@ const ColorSet = ({history}) => {
         }
     }, [])
 
+ 
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto">
@@ -39,7 +52,7 @@ const ColorSet = ({history}) => {
                                     <h6 className="font-sans text-md pb-2 text-gray-400">Created by: {data[0].user.name}</h6>
                                 </div>
                                 <div className="flex flex-row px-2">
-                                    <input type="button" value="Delete" className="w-full px-4 py-2 m-1 bg-red-600 text-white rounded-md cursor-pointer"/>
+                                    <input type="button" value="Delete" className="w-full px-4 py-2 m-1 bg-red-600 text-white rounded-md cursor-pointer" onClick={deleteSet}/>
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center align-center p-4">
