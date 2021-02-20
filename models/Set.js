@@ -5,6 +5,8 @@ const SetSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Please add a set name.'],
+        min: [6, 'Title is must be more than or equal to 6 characters.'],
+        max: [64, 'Title is must be less than or equal to 64 characters.']
     },
     image: {
         type: String,
@@ -38,5 +40,7 @@ SetSchema.pre('save', function (next) {
     next();
 });
 
+// Create index for search support on the following fields
+SetSchema.index({name: 'text'});
   
 module.exports = mongoose.model('Set', SetSchema)
