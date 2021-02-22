@@ -8,6 +8,7 @@ import ColorRectangle from '../components/ColorRectangle'
 import SetsToolbar from '../components/SetsToolbar'
 import {RiCloseCircleFill} from "react-icons/ri"
 import ReactPaginate from 'react-paginate';
+import Loading from '../components/Loading'
 
 const Home = ({history}) => {
     const { 
@@ -26,7 +27,7 @@ const Home = ({history}) => {
     } = useUploadImage();
 
     const [uploadedImage, setUploadedImage] = useState({
-        name: undefined,
+        name: '',
         file: undefined
     })
 
@@ -42,6 +43,7 @@ const Home = ({history}) => {
         executeImage({formData,history})
     }
 
+    console.log(uploadedImage)
     const handleImageUpload = (e) => {
         setUploadedImage({...uploadedImage, file: e.target.files[0]})
     }
@@ -99,7 +101,7 @@ const Home = ({history}) => {
         })
     }
 
-    const [sortSelect, setSortSelect] = useState('SetName')
+    const [sortSelect, setSortSelect] = useState('createdAt')
     const sortChange = (e) => {
         setSortSelect(e.target.value)
         execute({
@@ -136,7 +138,7 @@ const Home = ({history}) => {
                     <h1 className="text-center font-sans text-3xl pt-6 pb-10 px-6 md:text-left">Welcome Back, User</h1>
                     <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange} openModal={openModal}/>
                     <div className="flex flex-col justify-center align-center p-6">
-                        {(data) && <>
+                        {(data) ? <>
                             {data.data.map((set,i) => (
                                 <Link to={`../set/${set.slug}`} key={i}>
                                     <div className="flex flex-col text-center align-center p-4 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer md:flex-row md:text-left md:py-6 md:px-6 hover:border-green-500">
@@ -177,6 +179,7 @@ const Home = ({history}) => {
 
                         </div>
                         </>
+                        :<Loading/>
                         }
                     </div>
                 </div>

@@ -6,6 +6,7 @@ import AuthContext from '../context/authContext';
 import ColorRectangle from '../components/ColorRectangle'
 import ColorRange from '../components/ColorRange'
 import ColorHueToolbar from '../components/ColorHueToolbar'
+import Loading from '../components/Loading'
 
 const ColorSet = ({history}) => {
     const { 
@@ -63,7 +64,7 @@ const ColorSet = ({history}) => {
             <div className="container w-full mx-auto">
                 <div className="flex flex-col justify-center align-center p-6">
                     <div className="m-6 p-10 bg-white shadow-lg rounded-md">
-                        {data && <>
+                        {(data)? <>
                             <Link className="underline text-green-500" to="/sets">Back</Link>
                             <div className="flex flex-row justify-between items-center flex-grow px-2 pt-4">
                                 <div className="px-2 pt-2">
@@ -158,6 +159,7 @@ const ColorSet = ({history}) => {
                                 </div>
                             </div>
                         </>
+                        :<Loading/>
                         }
                     </div>
                 </div>
