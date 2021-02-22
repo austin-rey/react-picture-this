@@ -5,6 +5,7 @@ import { useDeleteSet } from '../hooks/sets/useDeleteSet'
 import AuthContext from '../context/authContext';
 import ColorRectangle from '../components/ColorRectangle'
 import ColorRange from '../components/ColorRange'
+import ColorHueToolbar from '../components/ColorHueToolbar'
 
 const ColorSet = ({history}) => {
     const { 
@@ -27,6 +28,25 @@ const ColorSet = ({history}) => {
         executeDelete({id: data[0]._id, history})
     }
 
+    // Range states
+    const [saturationRange, setSaturationRange] = useState({
+        min: '50',
+        max: '75'
+    })
+
+    const [lightnessRange, setLightnessRange] = useState({
+        min: '50',
+        max: '75'
+    })
+
+    const hueToolbarProps = {
+        saturationRange, 
+        setSaturationRange, 
+        lightnessRange, 
+        setLightnessRange,
+    }
+
+    // Verify user token is in cookies and apply redirect if necessary
     const session = useContext(AuthContext);
     const {getToken}= session;
     useEffect(() => {
@@ -38,7 +58,6 @@ const ColorSet = ({history}) => {
         }
     }, [])
 
- 
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto">
@@ -75,29 +94,67 @@ const ColorSet = ({history}) => {
                             <div className="flex flex-col p-4">
                                 <h2 className="font-sans text-2xl pb-1">Colors By Hue</h2>
                                 <h6 className="font-sans text-md pb-2 text-gray-400">Color scales found in your image based off <a className="underline text-green-500" href="https://www.december.com/html/spec/colorhsltable.html" target="_blank">hue ranges</a>. Click a color to copy its hex value.</h6>
-                                <div className="my-6">
-                                    <h6 className="font-sans text-md pb-2">Red <span className="font-sans text-sm pb-2 text-gray-400">&deg;0 - &deg;29</span></h6>
-                                    <ColorRange colorArr={data[0].colorRange.red} />
+                                <ColorHueToolbar {...hueToolbarProps} />
+                                <div className="my-6 ">
+                                    <div className="flex flex-row justify-between border-b mb-2">
+                                        <div className="flex flex-row items-center">
+                                            <h6 className="font-sans font-bold text-md pb-2">Red</h6>
+                                            <span className="font-sans text-sm pb-2 text-gray-400 font-normal ml-3">{'  '}{data[0].colorRange.red.length} results (Showing at most 1000)</span>
+                                        </div>
+                                        <span className="font-sans text-sm pb-2 text-yellow-500 font-normal">&deg;0 - &deg;12 and &deg;349 - &deg;360 </span>
+                                    </div>
+                                    <ColorRange saturationRange={saturationRange} lightnessRange={lightnessRange} colorArr={data[0].colorRange.red} />
                                 </div>
                                 <div className="my-6">
-                                    <h6 className="font-sans text-md pb-2">Orange <span className="font-sans text-sm pb-2 text-gray-400">&deg;30 - &deg;59</span></h6>
-                                    <ColorRange colorArr={data[0].colorRange.orange} />
+                                    <div className="flex flex-row justify-between border-b mb-2">
+                                        <div className="flex flex-row items-center">
+                                            <h6 className="font-sans font-bold text-md pb-2">Orange</h6>
+                                            <span className="font-sans text-sm pb-2 text-gray-400 font-normal ml-3">{'  '}{data[0].colorRange.orange.length} results (Showing at most 1000)</span>
+                                        </div>
+                                        <span className="font-sans text-sm pb-2 text-yellow-500 font-normal">&deg;13 - &deg;36 </span>
+                                    </div>
+                                    <ColorRange saturationRange={saturationRange} lightnessRange={lightnessRange} colorArr={data[0].colorRange.orange} />
                                 </div>
                                 <div className="my-6">
-                                    <h6 className="font-sans text-md pb-2">Yellow <span className="font-sans text-sm pb-2 text-gray-400">&deg;60 - &deg;89</span></h6>
-                                    <ColorRange colorArr={data[0].colorRange.yellow} />
+                                    <div className="flex flex-row justify-between border-b mb-2">
+                                        <div className="flex flex-row items-center">
+                                            <h6 className="font-sans font-bold text-md pb-2">Yellow</h6>
+                                            <span className="font-sans text-sm pb-2 text-gray-400 font-normal ml-3">{'  '}{data[0].colorRange.yellow.length} results (Showing at most 1000)</span>
+                                        </div>
+                                        <span className="font-sans text-sm pb-2 text-yellow-500 font-normal">&deg;37 - &deg;66 </span>
+                                    </div>
+                                   
+                                    <ColorRange saturationRange={saturationRange} lightnessRange={lightnessRange} colorArr={data[0].colorRange.yellow} />
                                 </div>
                                 <div className="my-6">
-                                    <h6 className="font-sans text-md pb-2">Green <span className="font-sans text-sm pb-2 text-gray-400">&deg;90 - &deg;179</span></h6>
-                                    <ColorRange colorArr={data[0].colorRange.green} />
+                                    <div className="flex flex-row justify-between border-b mb-2">
+                                        <div className="flex flex-row items-center">
+                                            <h6 className="font-sans font-bold text-md pb-2">Green</h6>
+                                            <span className="font-sans text-sm pb-2 text-gray-400 font-normal ml-3">{'  '}{data[0].colorRange.green.length} results (Showing at most 1000)</span>
+                                        </div>
+                                        <span className="font-sans text-sm pb-2 text-yellow-500 font-normal">&deg;67 - &deg;162 </span>
+                                    </div>
+                                    <ColorRange saturationRange={saturationRange} lightnessRange={lightnessRange} colorArr={data[0].colorRange.green} />
                                 </div>
                                 <div className="my-6">
-                                    <h6 className="font-sans text-md pb-2">Blue <span className="font-sans text-sm pb-2 text-gray-400"> &deg;180 - &deg;269</span></h6>
-                                    <ColorRange colorArr={data[0].colorRange.blue} />
+                                    <div className="flex flex-row justify-between border-b mb-2">
+                                        <div className="flex flex-row items-center">
+                                            <h6 className="font-sans font-bold text-md pb-2">Blue</h6>
+                                            <span className="font-sans text-sm pb-2 text-gray-400 font-normal ml-3">{'  '}{data[0].colorRange.blue.length} results (Showing at most 1000)</span>
+                                        </div>
+                                        <span className="font-sans text-sm pb-2 text-yellow-500 font-normal"> &deg;163 - &deg;252 </span>
+                                    </div>
+                                    <ColorRange saturationRange={saturationRange} lightnessRange={lightnessRange} colorArr={data[0].colorRange.blue} />
                                 </div>
                                 <div className="my-6">
-                                    <h6 className="font-sans text-md pb-2">Magenta <span className="font-sans text-sm pb-2 text-gray-400">&deg;270 - &deg;359</span></h6>
-                                    <ColorRange colorArr={data[0].colorRange.magenta} />
+                                    <div className="flex flex-row justify-between border-b mb-2">
+                                        <div className="flex flex-row items-center">
+                                            <h6 className="font-sans font-bold text-md pb-2">Magenta</h6>
+                                            <span className="font-sans text-sm pb-2 text-gray-400 font-normal ml-3">{'  '}{data[0].colorRange.magenta.length} results (Showing at most 1000)</span>
+                                        </div>
+                                        <span className="font-sans text-sm pb-2 text-yellow-500 font-normal">&deg;253 - &deg;348 </span>
+                                    </div>
+                                    <ColorRange saturationRange={saturationRange} lightnessRange={lightnessRange} colorArr={data[0].colorRange.magenta} />
                                 </div>
                             </div>
                         </>

@@ -19,13 +19,14 @@ exports.create = asyncHandler(async (req, res, next) => {
 
     // Calculate colors
     let hexColorArr;
+    //new Array(100).fill('#fff')
     let hueColorArrs = {
-        red: [],
-        orange: [],
-        yellow: [],
-        green: [],
-        blue: [],
-        magenta: [],
+        red:        [],
+        orange:     [],
+        yellow:     [],
+        green:      [],
+        blue:       [],
+        magenta:    [],
     }
 
     let fileType = path.extname(req.file.path);
@@ -47,23 +48,18 @@ exports.create = asyncHandler(async (req, res, next) => {
         .then((palette) => {
             for(let color in palette) {
                 const type = color
-
-                const population = palette[color].getPopulation()
-                const hsl = palette[color].getHsl()
                 const hex = palette[color].getHex()
-
                 vibrantColors.push({[type]: hex})
-                // console.log(vibrantColors)
             }
         })
 
     // Get hue ranges from image
     if(fileType === '.png') {
         console.log('png')
-    } else if(fileType === '.jpg') {
+    } else if(fileType === '.jpg' || fileType === '.JPG') {
         const buf = fs.readFileSync(req.file.path);
 
-        imageByteArr = inkjet.decode(buf, (err, decoded) => {
+        imageByteArr = inkjet.decode(buf, async (err, decoded) => {
 
             const {data} = decoded;
 
@@ -71,18 +67,31 @@ exports.create = asyncHandler(async (req, res, next) => {
             hexColorArr = toHexString(Object.values(data)).split('-');
 
             // Arrange colors into group based on Hue HSL value
-            hexColorArr.map((hexValue) => {
+            await hexColorArr.map((hexValue) => {
                 if(chroma.valid(hexValue)){
-                    let hslValue = chroma(hexValue).hsl();
-                    let hue = hslValue[0];
-                    let saturation = hslValue[1];
-
-                    if(hue >= 0 && hue <= 29 && saturation>=.1 && hueColorArrs.red.length<=200){hueColorArrs.red.push(hslValue)} 
-                    else if(hue >= 30  && hue <= 59 && saturation>=.1 && hueColorArrs.orange.length<=200)    {hueColorArrs.orange.push(hslValue)}
-                    else if(hue >= 60  && hue <= 89 && saturation>=.1 && hueColorArrs.yellow.length<=200)    {hueColorArrs.yellow.push(hslValue)}
-                    else if(hue >= 90  && hue <= 179 && saturation>=.1 && hueColorArrs.green.length<=200)   {hueColorArrs.green.push(hslValue)}
-                    else if(hue >= 180 && hue <= 269 && saturation>=.1 && hueColorArrs.blue.length<=200)   {hueColorArrs.blue.push(hslValue)}
-                    else if(hue >= 270 && hue <= 359 && saturation>=.1 && hueColorArrs.magenta.length<=200)   {hueColorArrs.magenta.push(hslValue)}
+                    let hslValue =      chroma(hexValue).hsl();
+                    let hue =           hslValue[0];
+                    let saturation =    hslValue[1];
+                    let lightness =     hslValue[2];
+                    // console.log(hslValue)
+                    if((hue >= 0 && hue <= 12) || (hue >= 349 && hue <= 360)) {
+                        hueColorArrs.red.push(hslValue)
+                    } 
+                    else if(hue >= 13  && hue <= 36) {
+                        hueColorArrs.orange.push(hslValue)
+                    }
+                    else if(hue >= 37  && hue <= 66) {
+                        hueColorArrs.yellow.push(hslValue)
+                    }
+                    else if(hue >= 67  && hue <= 162) {
+                        hueColorArrs.green.push(hslValue)
+                    }
+                    else if(hue >= 163 && hue <= 252) {
+                        hueColorArrs.blue.push(hslValue)
+                    }
+                    else if(hue >= 253 && hue <= 348) {
+                        hueColorArrs.magenta.push(hslValue)
+                    }
                 }
             })
         });
