@@ -139,6 +139,12 @@ const Home = ({history}) => {
                     <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange} openModal={openModal}/>
                     <div className="flex flex-col justify-center align-center p-6">
                         {(data) ? <>
+                            {(data.data.length === 0) &&
+                               <div className="flex flex-col w-full h-96 justify-center items-center p-4 my-2 border-4 border-gray-500 border-opacity-20 rounded-md">
+                                   <h1 className="flex font-sans text-3xl">No sets...</h1><br/>
+                                   <h4 className="flex font-sans text-lg">Start by clicking the "Create Set" button in the above toolbar.</h4>
+                                </div>
+                            }
                             {data.data.map((set,i) => (
                                 <Link to={`../set/${set.slug}`} key={i}>
                                     <div className="flex flex-col text-center align-center p-4 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer md:flex-row md:text-left md:py-6 md:px-6 hover:border-green-500">
