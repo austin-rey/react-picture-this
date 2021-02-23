@@ -7,20 +7,11 @@ import {MdFilterFrames} from "react-icons/md"
 const Header = ({history}) => {
 
     const session = useContext(AuthContext);
-    const {deleteToken,token}= session;
-
-    // useEffect(() => {
-    //     const tokenExists = getToken();
-    //     if(tokenExists != undefined){
-    //         execute();
-    //     } else {
-    //         history.push('/')
-    //     }
-
-    // }, [])
+    const {deleteToken,token,logoutUser}= session;
     
-    const logoutUser = () => {
+    const logout = () => {
         deleteToken()
+        logoutUser()
         history.push('/')
     }
 
@@ -41,7 +32,7 @@ const Header = ({history}) => {
                         </>)
                         :<>
                             <p><Link to="/sets" className="p-2 text-white font-sans font-bold text-sm">Sets</Link></p>
-                            <p onClick={logoutUser}><Link className="p-2 text-white font-sans font-bold text-sm">Logout</Link></p>
+                            <p onClick={logout}><Link className="p-2 text-white font-sans font-bold text-sm">Logout</Link></p>
                         </>
                         }
                     </div>

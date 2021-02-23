@@ -14,6 +14,7 @@ export const loginUser = async ({loginUser}) => {
     },
     withCredentials: true
   })
+  console.log(response)
   return response;
 }
 
@@ -26,7 +27,7 @@ export const useLoginUser = () => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
   const session = useContext(AuthContext);
-  const {addToken} = session;
+  const {addToken,userLogin} = session;
 
   const execute = async (options = {}) => {
     try {
@@ -34,6 +35,7 @@ export const useLoginUser = () => {
       const results = await loginUser(options);
       setData(results);
       await addToken(results.data.token)
+      await userLogin({name: results.data.user.name, email: results.data.user.email})
       options.history.push('/sets')
       return results;
     } catch (error) {

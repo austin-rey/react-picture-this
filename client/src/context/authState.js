@@ -4,6 +4,10 @@ import AuthContext from './authContext';
 
 const AuthState = (props) => {
     const [token, setToken] = useState(Cookies.get('token'))
+    const [user, setUser] = useState({
+      name: Cookies.get('user-name'),
+      email: Cookies.get('user-email')
+    })
 
     // Add Token
     const addToken = (token) => {
@@ -20,17 +24,31 @@ const AuthState = (props) => {
 
     // Get Token
     const getToken = () => {
-      console.log(token)
         return token
+    }
+
+    const userLogin = (user) => {
+      console.log(user)
+      Cookies.set('user-name', user.name)
+      Cookies.set('user-email', user.email)
+      setUser(user)
+    }
+
+    const logoutUser = () => {
+      Cookies.remove('user-name')
+      Cookies.remove('user-email')
     }
 
     return (
         <AuthContext.Provider
           value={{
             token: token,
+            user: user,
             addToken,
             deleteToken,
-            getToken
+            getToken,
+            userLogin,
+            logoutUser
           }}
         >
           {props.children}

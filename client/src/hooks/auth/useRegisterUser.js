@@ -29,7 +29,7 @@ export const useRegisterUser = () => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
   const session = useContext(AuthContext);
-  const {addToken} = session;
+  const {addToken,userLogin} = session;
 
   const execute = async (options = {}) => {
     try {
@@ -37,6 +37,7 @@ export const useRegisterUser = () => {
       const results = await registerUser(options);
       setData(results);
       await addToken(results.data.token)
+      await userLogin({name: results.data.user.name, email: results.data.user.email})
       options.history.push('/sets')
       return results;
     } catch (error) {

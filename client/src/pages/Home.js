@@ -50,7 +50,7 @@ const Home = ({history}) => {
 
     // Session and Initial Loading ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const session = useContext(AuthContext);
-    const {getToken}= session;
+    const {getToken,user}= session;
 
     useEffect(() => {
         const tokenExists = getToken();
@@ -135,7 +135,7 @@ const Home = ({history}) => {
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto pt-12 pb-12"> 
                 <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md">
-                    <h1 className="text-center font-sans text-3xl pt-6 pb-10 px-6 md:text-left">Welcome Back, User</h1>
+                    <h1 className="text-center font-sans text-3xl pt-6 pb-10 px-6 md:text-left">Welcome Back, {user.name}</h1>
                     <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange} openModal={openModal}/>
                     <div className="flex flex-col justify-center align-center p-6">
                         {(data) ? <>
