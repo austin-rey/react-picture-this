@@ -21,18 +21,18 @@ const advancedResults = (model, populate) => async (req, res, next) => {
       query = model.find({});
     }
     
+    // Sort fields
+    console.log(req.query.sort)
+    if (req.query.sort) {
+      query = query.sort({ [req.query.sort]: 1});
+    } else {
+      query = query.sort({ "lowercaseName": 1, "_id": 1 });
+    }
+
     // Select fields
     if (req.query.select) {
       const fields = req.query.select.split(',').join(' ');
       query = query.select(fields);
-    }
-
-    // Sort fields
-    console.log(req.query.sort)
-    if (req.query.sort) {
-      query = query.sort(req.query.sort);
-    } else {
-      query = query.sort('+createdAt');
     }
   
     // Pagination

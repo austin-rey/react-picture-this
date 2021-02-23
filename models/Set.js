@@ -31,12 +31,19 @@ const SetSchema = new mongoose.Schema({
     },
     slug: {
         type: String
+    },
+    lowercaseName: {
+        type: String,
     }
 })
 
-// Create bootcamp slug from name
 SetSchema.pre('save', function (next) {
+    // Create bootcamp slug from name
     this.slug = slugify(this.name, { lower: true,replacement: '-' });
+
+    // Create lowercaseName to support consistent name sorts
+    this.lowercaseName = this.name.toLowerCase();
+    
     next();
 });
 
