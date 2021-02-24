@@ -14,7 +14,6 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     // Create query string
     let queryStr = Object.values(reqQuery).toString();
 
-    // Finding resources by query string - /\BqueryStr|queryStr\B/
     if(queryStr.length > 0){
       query = model.find({$text: {$search: queryStr}});
     } else {
@@ -22,9 +21,8 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     }
     
     // Sort fields
-    console.log(req.query.sort)
     if (req.query.sort) {
-      query = query.sort({ [req.query.sort]: 1});
+      query = query.sort({ [req.query.sort]: 1, "_id": 1 });
     } else {
       query = query.sort({ "lowercaseName": 1, "_id": 1 });
     }

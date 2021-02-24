@@ -48,6 +48,6 @@ SetSchema.pre('save', function (next) {
 });
 
 // Create index for search support on the following fields
-SetSchema.index({name: 'text'});
+SetSchema.index({name: 'text',lowercaseName: 1});
   
 module.exports = mongoose.model('Set', SetSchema)
