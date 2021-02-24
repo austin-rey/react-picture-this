@@ -40,8 +40,8 @@ const Register = ({history}) => {
     }, [])
 
     return (
-        <div className="root h-full bg-green-700">
-            <div className="container w-full md:w-2/3 lg:w-2/3 xl:w-1/3 mx-auto pt-12 pb-12"> 
+        <div className="root h-screen bg-green-700">
+            <div className="container h-full w-full md:w-2/3 lg:w-2/3 xl:w-1/3 mx-auto pt-12 pb-12"> 
                 <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md">
                     <h1 className="font-sans text-4xl p-4 text-left">Register</h1>
                     <RegisterForm onChange={updateRegisterForm} formFields={registerUser} onSubmit={submitRegisterUser} />
