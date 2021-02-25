@@ -26,7 +26,7 @@ export const useUploadImage = () => {
       setIsLoading(true);
       const results = await uploadImage(options);
       setData(results);
-      options.history.push(`/set/${results.data.data.slug}`)
+      options.history.push(`/set/${results.data.data._id}`)
       return results;
     } catch (error) {
       setError(error);

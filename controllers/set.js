@@ -7,6 +7,7 @@ const path = require('path')
 const fs = require('fs')
 const chroma = require('chroma-js');
 const Vibrant = require('node-vibrant')
+const inkjet = require('inkjet')
 
 // @desc    Create a set
 // @route   POST /api/v1/set/create
@@ -72,22 +73,22 @@ exports.create = asyncHandler(async (req, res, next) => {
                     let lightness =     hslValue[2];
                     // console.log(hslValue)
                     if((hue >= 0 && hue <= 12) || (hue >= 349 && hue <= 360)) {
-                        hueColorArrs.red.push(hslValue)
+                        if(!hueColorArrs.red.includes(hexValue)) hueColorArrs.red.push(hexValue)
                     } 
                     else if(hue >= 13  && hue <= 36) {
-                        hueColorArrs.orange.push(hslValue)
+                        if(!hueColorArrs.orange.includes(hexValue)) hueColorArrs.orange.push(hexValue)
                     }
                     else if(hue >= 37  && hue <= 66) {
-                        hueColorArrs.yellow.push(hslValue)
+                        if(!hueColorArrs.yellow.includes(hexValue)) hueColorArrs.yellow.push(hexValue)
                     }
                     else if(hue >= 67  && hue <= 162) {
-                        hueColorArrs.green.push(hslValue)
+                        if(!hueColorArrs.green.includes(hexValue)) hueColorArrs.green.push(hexValue)
                     }
                     else if(hue >= 163 && hue <= 252) {
-                        hueColorArrs.blue.push(hslValue)
+                        if(!hueColorArrs.blue.includes(hexValue)) hueColorArrs.blue.push(hexValue)
                     }
                     else if(hue >= 253 && hue <= 348) {
-                        hueColorArrs.magenta.push(hslValue)
+                        if(!hueColorArrs.magenta.includes(hexValue)) hueColorArrs.magenta.push(hexValue)
                     }
                 }
             })
