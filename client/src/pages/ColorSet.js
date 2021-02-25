@@ -7,6 +7,7 @@ import ColorRectangle from '../components/ColorRectangle'
 import ColorRange from '../components/ColorRange'
 import ColorHueToolbar from '../components/ColorHueToolbar'
 import Loading from '../components/Loading'
+import Error from '../components/Error'
 
 const ColorSet = ({history}) => {
     const { 
@@ -64,6 +65,14 @@ const ColorSet = ({history}) => {
             <div className="container w-full mx-auto">
                 <div className="flex flex-col justify-center align-center p-6">
                     <div className="m-6 p-10 bg-white shadow-lg rounded-md">
+                        {error && 
+                            <Error message={error.message}/>
+                        }
+                         {errorDelete && 
+                            <div className="flex flex-col w-full justify-center items-center p-1 my-2 rounded-md bg-red-500">
+                                <h3 className="flex font-sans text-xl text-white">{errorDelete.message}</h3>
+                            </div>
+                        }
                         {(data)? <>
                             <Link className="underline text-green-500" to="/sets">Back</Link>
                             <div className="flex flex-row justify-between items-center flex-grow px-2 pt-4">

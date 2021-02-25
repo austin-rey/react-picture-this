@@ -9,6 +9,8 @@ import SetsToolbar from '../components/SetsToolbar'
 import {RiCloseCircleFill} from "react-icons/ri"
 import ReactPaginate from 'react-paginate';
 import Loading from '../components/Loading'
+import Spinner from '../components/Spinner'
+import Error from '../components/Error'
 
 const Home = ({history}) => {
     const { 
@@ -43,7 +45,6 @@ const Home = ({history}) => {
         executeImage({formData,history})
     }
 
-    console.log(uploadedImage)
     const handleImageUpload = (e) => {
         setUploadedImage({...uploadedImage, file: e.target.files[0]})
     }
@@ -101,7 +102,7 @@ const Home = ({history}) => {
         })
     }
 
-    const [sortSelect, setSortSelect] = useState('createdAt')
+    const [sortSelect, setSortSelect] = useState('lowercaseName')
     const sortChange = (e) => {
         setSortSelect(e.target.value)
         execute({
@@ -138,6 +139,9 @@ const Home = ({history}) => {
                     <h1 className="text-center font-sans text-3xl pt-6 pb-10 px-6 md:text-left">Welcome Back, {user.name}</h1>
                     <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange} openModal={openModal}/>
                     <div className="flex flex-col justify-center align-center p-6">
+                        {error && 
+                            <Error message={error.message}/>
+                        }
                         {(data) ? <>
                             {(data.data.length === 0) &&
                                <div className="flex flex-col w-full h-96 justify-center items-center p-4 my-2 border-4 border-gray-500 border-opacity-20 rounded-md">
@@ -201,6 +205,10 @@ const Home = ({history}) => {
                         <h2 className="font-sans text-2xl pb-2">Create a New Set</h2>
                         <button className="p-1 text-white rounded-lg" onClick={closeModal}><RiCloseCircleFill className="text-gray-700 w-6 h-6"/></button>
                     </div>
+                    {errorImage && 
+                        <Error message={errorImage.message}/>
+                    }
+                    {isLoadingImage && <Spinner/>}
                     <form onSubmit={imageSubmit} encType="multipart/form-data" className="w-96">
                         <div className="mb-6">
                             <p className="w-full py-2 text-left text-lg">Name</p>
