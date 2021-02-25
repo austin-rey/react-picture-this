@@ -150,7 +150,7 @@ const Home = ({history}) => {
                                 </div>
                             }
                             {data.data.map((set,i) => (
-                                <Link to={`../set/${set.slug}`} key={i}>
+                                <Link to={`../set/${set._id}`} key={i}>
                                     <div className="flex flex-col text-center align-center p-4 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer md:flex-row md:text-left md:py-6 md:px-6 hover:border-green-500">
                                         <div className="w-full lg:w-72 h-36 bg-gray-100">
                                             <img className="h-full m-auto mh-05" src={set.image} alt={set.name}/>
@@ -217,7 +217,7 @@ const Home = ({history}) => {
                         </div>
                         <div className="mb-6">
                             <p className="w-full py-2 text-left text-lg">Image</p>
-                            <p className="font-sans text-xs pb-2 text-yellow-500">JPEG/PNG - 3 MB Limit</p>
+                            <p className="font-sans text-xs pb-2 text-yellow-500">JPEG/JPG - 3 MB Limit</p>
                             <input className="text-center flex mb-4 bg-gray-100 p-1 rounded-md w-full" type="file" id="image-upload-button" name="setImage" accept="image/png, image/jpeg" onChange={handleImageUpload}/>
                         </div>
                         <input disabled={(uploadedImage.file !== undefined && uploadedImage.name.length>=6 && uploadedImage.name.length<=64)?false:true} type="submit" value="Upload" className="font-bold w-full p-2 bg-green-700 text-white rounded-md cursor-pointer opacity-100 disabled:opacity-50 disabled:cursor-not-allowed"/>

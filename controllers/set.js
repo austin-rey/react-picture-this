@@ -5,7 +5,6 @@ const Set = require('../models/Set');
 
 const path = require('path')
 const fs = require('fs')
-const inkjet = require('inkjet');
 const chroma = require('chroma-js');
 const Vibrant = require('node-vibrant')
 
@@ -54,9 +53,7 @@ exports.create = asyncHandler(async (req, res, next) => {
         })
 
     // Get hue ranges from image
-    if(fileType === '.png') {
-        console.log('png')
-    } else if(fileType === '.jpg' || fileType === '.JPG') {
+    if(fileType === '.jpg' || fileType === '.JPG') {
         const buf = fs.readFileSync(req.file.path);
 
         imageByteArr = inkjet.decode(buf, async (err, decoded) => {
@@ -117,7 +114,7 @@ exports.create = asyncHandler(async (req, res, next) => {
 exports.viewSet = asyncHandler(async (req, res, next) => {
 
     console.log(req.params.id);
-    const set = await Set.find({slug: req.params.id}).populate('user');
+    const set = await Set.find({_id: req.params.id}).populate('user');
 
     if (!set) {
         return next(
