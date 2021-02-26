@@ -6,19 +6,19 @@ const RegisterForm = ({onChange,formFields,onSubmit}) => {
     return (
         <form className="root flex flex-col" onSubmit={onSubmit}>
             <div className="m-5">
-                <p className="w-full py-2 text-left text-lg">Name</p>
-                <input type="text" id="name-field" name="username" placeholder="Enter a valid name..." className="w-full p-2 rounded-md border-4 border-green-500 border-opacity-50 focus:border-opacity-100 outline-none" value={formFields.username} onChange={onChange}/>
+                <label for="name-field" className="w-full text-left leading-10 text-xl font-sans">Name</label>
+                <input type="text" id="name-field" name="username" placeholder="Enter a valid name..." className="w-full p-2 rounded-md border-4 border-gray-500 border-opacity-20 focus:border-green-500 outline-none h-full hover:border-green-500" value={formFields.username} onChange={onChange}/>
             </div>
             <div className="m-5">
-                <p className="w-full py-2 text-left text-lg">Email</p>
-                <input type="text" id="email-field" name="email" placeholder="Enter a valid email..." className="w-full p-2 rounded-md border-4 border-green-500 border-opacity-50 focus:border-opacity-100 outline-none" value={formFields.email} onChange={onChange}/>
+                <label for="email-field" className="w-full text-left leading-10 text-xl font-sans">Email</label>
+                <input type="text" id="email-field" name="email" placeholder="Enter a valid email..." className="w-full p-2 rounded-md border-4 border-gray-500 border-opacity-20 focus:border-green-500 outline-none h-full hover:border-green-500" value={formFields.email} onChange={onChange}/>
             </div>
             <div className="m-5">
-                <p className="w-full py-2 text-left text-lg">Password</p>
-                <input type="password" id="password-field" name="password" placeholder="Enter a valid password..." className="w-full p-2 rounded-md border-4 border-green-500 border-opacity-50 focus:border-opacity-100 outline-none" value={formFields.password} onChange={onChange}/>
+                <label for="password-field" className="w-full text-left leading-10 text-xl font-sans">Password</label>
+                <input type="password" id="password-field" name="password" placeholder="Enter a valid password..." className="w-full p-2 rounded-md border-4 border-gray-500 border-opacity-20 focus:border-green-500 outline-none h-full hover:border-green-500" value={formFields.password} onChange={onChange}/>
             </div>
             <div className="m-5">
-                <input type="submit" value="Submit" className="w-full p-2 bg-green-700 text-white rounded-md"/>
+                <input type="submit" value="Submit" className="w-full p-4 bg-green-700 text-white rounded-md font-bold"/>
             </div>
         </form>
     )

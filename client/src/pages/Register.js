@@ -47,7 +47,7 @@ const Register = ({history}) => {
                     {error && 
                         <Error message={error.message}/>
                     }
-                    <h1 className="font-sans text-4xl p-4 text-left">Register</h1>
+                    <h1 className="font-Lato text-5xl text-gray-700 p-4 text-center">Register</h1>
                     <RegisterForm onChange={updateRegisterForm} formFields={registerUser} onSubmit={submitRegisterUser} />
                 </div>
             </div>

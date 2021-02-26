@@ -35,6 +35,8 @@ module.exports = {
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
+      Lato: ['Lato','sans-serif'],
+      Mada: ['Mada','sans-serif']
     }
   },
   variants: {

@@ -6,15 +6,15 @@ const LoginForm = ({onChange, formFields,onSubmit}) => {
     return (
         <form className="root flex flex-col" onSubmit={onSubmit}>
             <div className="m-5">
-                <p className="py-2 text-left text-lg w-full">Email</p>
-                <input type="text" id="email-field" name="email" placeholder="Enter a valid email..." value={formFields.email} className="w-full p-2 rounded-md border-4 border-green-500 border-opacity-50 focus:border-opacity-100 outline-none" onChange={onChange}/>
+                <label for="email-field" className="leading-10 text-left text-xl w-full font-sans">Email</label>
+                <input type="text" id="email-field" name="email" placeholder="Enter a valid email..." value={formFields.email} className="w-full p-2 rounded-md border-4 border-gray-500 border-opacity-20 focus:border-green-500 outline-none h-full hover:border-green-500" onChange={onChange}/>
             </div>
             <div className="m-5">
-                <p className="w-full py-2 text-left text-lg">Password</p>
-                <input type="password" id="password-field" name="password" placeholder="Enter a valid password..." value={formFields.password} className="w-full p-2 rounded-md border-4 border-green-500 border-opacity-50 focus:border-opacity-100 outline-none" onChange={onChange}/>
+                <label for="password-field" className="w-full leading-10 text-left text-xl font-sans">Password</label>
+                <input type="password" id="password-field" name="password" placeholder="Enter a valid password..." value={formFields.password} className="w-full p-2 rounded-md border-4 border-gray-500 border-opacity-20 focus:border-green-500 outline-none h-full hover:border-green-500" onChange={onChange}/>
             </div>
             <div className="m-5">
-                <input type="submit" value="Submit" className="w-full p-2 bg-green-700 text-white rounded-md"/>
+                <input type="submit" value="Submit" className="w-full p-4 bg-green-700 text-white font-bold rounded-md cursor-pointer hover:bg-green-900"/>
             </div>
         </form>
     )
