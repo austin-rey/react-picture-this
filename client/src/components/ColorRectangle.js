@@ -6,12 +6,12 @@ const copyToClipboard = (e, value) => {
     e.preventDefault();
     navigator.clipboard.writeText(e.target.value) 
 }
-// const [show, setDisplay] = useState(false)
-const ColorRectangle = ({hex}) => {
+
+const ColorRectangle = (props) => {
     return (
-        <div className="group outline-none relative w-full h-full hover:shadow-md" style={{backgroundColor: hex}}>
-            <input type="button" className="w-full h-full opacity-0 cursor-pointer group-hover:opacity-100 focus:shadow-none" onClick={copyToClipboard} style={{backgroundColor: hex, color: invertColor(hex,true)}} value={hex}/>
-            <span className="text-white absolute top-0.5 right-0.5 opacity-0 group-hover:opacity-100" style={{color: invertColor(hex,true)}}><AiFillCopy/></span>
+        <div className={`${props.className} group outline-none relative w-full h-full`} style={{backgroundColor: props.hex}}>
+            <input type="button" className={`${props.className} w-full h-full opacity-0 cursor-pointer outline-none group-hover:opacity-100 focus:shadow-none`} onClick={copyToClipboard} style={{backgroundColor: props.hex, color: invertColor(props.hex,true)}} value={props.hex}/>
+            <span className="text-white absolute top-1/4 right-4 opacity-0 group-hover:opacity-100" style={{color: invertColor(props.hex,true)}}><AiFillCopy/></span>
         </div>
     )
 }

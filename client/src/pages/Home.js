@@ -136,9 +136,9 @@ const Home = ({history}) => {
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto pt-12 pb-12"> 
                 <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md">
-                    <h1 className="text-center font-sans text-3xl pt-6 pb-10 px-6 md:text-left">Welcome Back, {user.name}</h1>
+                    <h1 className="text-center font-sans text-3xl mb-10 mx-6 p-4 rounded-md bg-gray-100 md:text-left">Welcome Back, {user.name}</h1>
                     <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange} openModal={openModal}/>
-                    <div className="flex flex-col justify-center align-center p-6">
+                    <div className="flex flex-col justify-center align-center px-6">
                         {error && 
                             <Error message={error.message}/>
                         }
@@ -149,29 +149,33 @@ const Home = ({history}) => {
                                    <h4 className="flex font-sans text-lg">Start by clicking the "Create Set" button in the above toolbar.</h4>
                                 </div>
                             }
+                            <div className="flex flex-col px-4 pt-8 border-b-4 border-gray-500 border-opacity-20"></div>
                             {data.data.map((set,i) => (
-                                <Link to={`../set/${set._id}`} key={i}>
-                                    <div className="flex flex-col text-center align-center p-4 my-2 border-4 border-gray-500 border-opacity-20 rounded-md cursor-pointer md:flex-row md:text-left md:py-6 md:px-6 hover:border-green-500">
-                                        <div className="w-full lg:w-72 h-36 bg-gray-100">
-                                            <img className="h-full m-auto mh-05" src={set.image} alt={set.name}/>
+                                    <div className="flex flex-col text-center align-center py-4 border-b-4 border-gray-200 md:flex-row md:text-left md:py-6" key={set._id}>
+                                        <div className="w-full lg:w-72 h-48 bg-gray-100 rounded-md p-2">
+                                            <img className="h-full m-auto mh-05 rounded-md" src={set.image} alt={set.name}/>
                                         </div>
                                         <div className="flex flex-col py-1 md:pl-4 content-between md:w-full lg:flex-grow">
                                             <div className="sm:py-2">
                                                 <h2 className="font-sans text-2xl pb-2">{set.name}</h2>
                                                 <h6 className="font-sans text-md pb-2 text-gray-400">Created By: {set.user.name}</h6>
                                             </div>
-                                            <div className="flex flex-col md:flex-row justify-between items-start flex-grow h-full">
+                                            <div className="flex flex-col md:flex-row justify-start items-start flex-grow h-full">
                                                 {set.pallette.map((color,i) => (
-                                                    <div key={i} className="w-full md:w-1/5 h-12">
-                                                        <ColorRectangle hex={Object.values(color).toString()}/>
+                                                    <div key={i} className="w-20 h-20 mr-8 transform hover:scale-125">
+                                                        <ColorRectangle hex={Object.values(color).toString()} className="rounded-full shadow-lg"/>
                                                     </div>
                                                 ))}
                                             </div>
                                         </div>
+                                        <div className="bg-green-700 rounded-md flex flex-grow items-center text-white cursor-pointer font-bold hover:bg-green-900">
+                                            <Link className="w-full h-full" to={`../set/${set._id}`}>
+                                                <p className="flex items-center w-full h-full p-4">view</p>
+                                            </Link>
+                                        </div>
                                     </div>
-                                </Link>
                             ))}
-                            <div className="flex flex-col align-center py-6 px-6 my-2 text-center bg-gray-100 rounded-md">
+                            <div className="flex flex-col align-center py-6 px-6 my-6 text-center bg-gray-100 rounded-md">
                             <ReactPaginate
                                 previousLabel={"Previous"}
                                 nextLabel={"Next"}
@@ -179,12 +183,12 @@ const Home = ({history}) => {
                                 pageCount={data.pagination.totalPages}
                                 onPageChange={pageChange}
                                 containerClassName={"pagination flex flex-row items-center justify-center font-bold"}
-                                previousLinkClassName={"bg-green-700 text-white rounded-md p-5 m-2"}
-                                nextLinkClassName={"bg-green-700 text-white rounded-md p-5 m-2"}
+                                previousLinkClassName={"bg-green-700 text-white rounded-md p-5 m-2 hover:bg-green-900"}
+                                nextLinkClassName={"bg-green-700 text-white rounded-md p-5 m-2 hover:bg-green-900"}
                                 disabledClassName={"pagination__link--disabled opacity-50 cursor-not-allowed"}
                                 activeClassName={"pagination__link--active text-white"}
-                                pageLinkClassName={"bg-white text-green-700 rounded-md p-4 m-2 border-4 border-green-700 border-opacity-50 hover:border-opacity-100"}
-                                activeLinkClassName={""}
+                                pageLinkClassName={"bg-white text-green-700 rounded-md p-4 m-2 border-4 border-green-700 border-opacity-50 hover:border-opacity-100 outline-none"}
+                                activeLinkClassName={" border-opacity-100"}
                             />
 
                         </div>
@@ -220,7 +224,7 @@ const Home = ({history}) => {
                             <p className="font-sans text-xs pb-2 text-yellow-500">JPEG/JPG - 3 MB Limit</p>
                             <input className="text-center flex mb-4 bg-gray-100 p-1 rounded-md w-full" type="file" id="image-upload-button" name="setImage" accept="image/png, image/jpeg" onChange={handleImageUpload}/>
                         </div>
-                        <input disabled={(uploadedImage.file !== undefined && uploadedImage.name.length>=6 && uploadedImage.name.length<=64)?false:true} type="submit" value="Upload" className="font-bold w-full p-2 bg-green-700 text-white rounded-md cursor-pointer opacity-100 disabled:opacity-50 disabled:cursor-not-allowed"/>
+                        <input disabled={(uploadedImage.file !== undefined && uploadedImage.name.length>=6 && uploadedImage.name.length<=64)?false:true} type="submit" value="Upload" className="font-bold w-full p-2 bg-green-700 text-white rounded-md cursor-pointer opacity-100 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-900"/>
                     </form>
                 </div>
             </Modal>

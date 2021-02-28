@@ -14,7 +14,7 @@ const SetsToolbar = ({searchQuery,searchChange,sortSelect,sortChange,openModal})
                     <option value="createdAt">Created Date (newest)</option>
                 </select>
             </div>
-            <button onClick={openModal} className="w-full md:w-64 bg-green-700 text-white rounded-md p-4 font-bold mt-4 md:mt-0">Create Set</button>
+            <button onClick={openModal} className="w-full md:w-64 bg-green-700 text-white rounded-md p-4 font-bold mt-4 md:mt-0 hover:bg-green-900">Create Set</button>
         </div>
     )
 }

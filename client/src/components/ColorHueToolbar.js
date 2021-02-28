@@ -11,33 +11,33 @@ const ColorHueToolbar = ({saturationRange,setSaturationRange,lightnessRange,setL
     }
        
     return (
-            <div className="bg-gray-200 p-4">
+            <div className="py-4">
                 <div className="flex flex-row">
-                    <div className="flex flex-col w-6/12 mr-4">
-                        <h6 className="font-sans font-bold text-md pb-2 mb-2 border-b-2">Saturation</h6>
-                        <div className="flex flex-row justify-between items-center">
-                            <div className="flex flex-col">
-                                <label htmlFor="min-sat">Min</label>
-                                <input type="text" id="min-sat" name="min" placeholder="Enter a number..." value={saturationRange.min} onChange={saturationChange} className="w-16 p-2 rounded-md"/>
+                    <div className="flex flex-col w-6/12 mr-2 bg-gray-100 rounded-md">
+                        <h6 className="font-sans font-bold text-lg py-2 pl-1 text-center">Saturation</h6>
+                        <div className="flex flex-row justify-between items-center p-4">
+                            <div className="flex flex-col flex-grow text-center">
+                                <label htmlFor="min-sat" className="mb-2 text-center text-md w-full font-sans">Min <span className="font-bold">(0%)</span></label>
+                                <input type="text" id="min-sat" name="min" placeholder="Enter a number..." value={saturationRange.min} onChange={saturationChange} className="w-full p-2 rounded-md text-center outline-none border-4 border-gray-500 border-opacity-20 focus:border-green-500"/>
                             </div>
-                            <p className="flex flex-col">to</p>
-                            <div className="flex flex-col">
-                                <label htmlFor="max-sat">Max</label>
-                                <input type="text" id="max-sat" name="max" placeholder="Enter a number..." value={saturationRange.max} onChange={saturationChange} className="w-16 p-2 rounded-md"/>
+                            <p className="flex flex-col px-8 pt-8">to</p>
+                            <div className="flex flex-col flex-grow text-center">
+                                <label htmlFor="max-sat" className="mb-2 text-center text-md w-full font-sans">Max <span className="font-bold">(100%)</span></label>
+                                <input type="text" id="max-sat" name="max" placeholder="Enter a number..." value={saturationRange.max} onChange={saturationChange} className="w-full p-2 rounded-md text-center outline-none border-4 border-gray-500 border-opacity-20 focus:border-green-500"/>
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col w-6/12 ml-4">
-                        <h6 className="font-sans font-bold text-md pb-2 mb-2 border-b-2">Lightness</h6>
-                        <div className="flex flex-row justify-between items-center">
-                            <div className="flex flex-col">
-                                <label htmlFor="min-light">Min</label>
-                                <input type="text" id="min-light" name="min" placeholder="Enter a number..." value={lightnessRange.min} onChange={lightnessChange} className="w-16 p-2 rounded-md"/>
+                    <div className="flex flex-col w-6/12 ml-2 bg-gray-100 rounded-md">
+                        <h6 className="font-sans font-bold text-lg py-2 pl-1 text-center">Lightness</h6>
+                        <div className="flex flex-row justify-between items-center bg-gray-100 p-4">
+                            <div className="flex flex-col flex-grow text-center">
+                                <label htmlFor="min-light" className="mb-2 text-center text-md w-full font-sans">Min <span className="font-bold">(0%)</span></label>
+                                <input type="text" id="min-light" name="min" placeholder="Enter a number..." value={lightnessRange.min} onChange={lightnessChange} className="w-full p-2 rounded-md text-center outline-none border-4 border-gray-500 border-opacity-20 focus:border-green-500"/>
                             </div>
-                            <p className="flex flex-col">to</p>
-                            <div className="flex flex-col">
-                                <label htmlFor="max-light">Max</label>
-                                <input type="text" id="max-light" name="max" placeholder="Enter a number..." value={lightnessRange.max} onChange={lightnessChange} className="w-16 p-2 rounded-md"/>
+                            <p className="flex flex-col px-8 pt-8">to</p>
+                            <div className="flex flex-col flex-grow text-center">
+                                <label htmlFor="max-light" className="mb-2 text-center text-md w-full font-sans">Max <span className="font-bold">(100%)</span></label>
+                                <input type="text" id="max-light" name="max" placeholder="Enter a number..." value={lightnessRange.max} onChange={lightnessChange} className="w-full p-2 rounded-md text-center outline-none border-4 border-gray-500 border-opacity-20 focus:border-green-500"/>
                             </div>
                         </div>
                     </div>
