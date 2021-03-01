@@ -7,7 +7,12 @@ const connectDB = require('./config/db');
 const cookieParser = require("cookie-parser");
 const path = require('path');
 const errorHandler = require('./middleware/error');
-var cors = require('cors')
+const cors = require('cors')
+const helmet = require('helmet')
+const xss = require('xss-clean')
+const rateLimit = require('express-rate-limit')
+const hpp = require('hpp')
+const mongoSanitize = require('express-mongo-sanitize')
  
 dotenv.config({path: './config/config.env'})
 
@@ -27,18 +32,37 @@ app.use(express.json());
 // Cors
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
+// Clean data from requests
+app.use(mongoSanitize());
+
+// Add security headers that aren't set by default
+app.use(helmet());
+
+// Prevent XSS
+app.use(xss());
+
+// Rate Limit
+const limiter = rateLimit({
+    windowMs: 10 *60 * 1000, // 10 Minutes
+    max: 100
+});
+app.use(limiter);
+
+// HPP attacks
+app.use(hpp());
+
 // Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
+    app.use(morgan('dev')); 
 }
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'client/build')));
-    // Handle React routing, return all requests to React app
-    app.get('*', function(req, res) {
-        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-    });
-  }
+// if (process.env.NODE_ENV === 'production') {
+//     app.use(express.static(path.join(__dirname, 'client/build')));
+//     // Handle React routing, return all requests to React app
+//     app.get('*', function(req, res) {
+//         res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+//     });
+//   }
 
 
 // Cookie Parser

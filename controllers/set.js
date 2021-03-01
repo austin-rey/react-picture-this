@@ -5,9 +5,11 @@ const Set = require('../models/Set');
 
 const path = require('path')
 const fs = require('fs')
+
 const chroma = require('chroma-js');
 const Vibrant = require('node-vibrant')
 const inkjet = require('inkjet')
+const clean = require('xss-clean/lib/xss').clean
 
 // @desc    Create a set
 // @route   POST /api/v1/set/create
@@ -99,7 +101,7 @@ exports.create = asyncHandler(async (req, res, next) => {
     const staticImagePath = `/images/${req.file.filename}`
 
     const set = await Set.create({
-        name: req.body.name,
+        name: clean(req.body.name),
         image:  staticImagePath,
         user: req.body.user,
         pallette: vibrantColors,
