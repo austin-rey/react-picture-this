@@ -136,7 +136,7 @@ const Home = ({history}) => {
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto pt-12 pb-12"> 
                 <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md">
-                    <h1 className="text-center font-sans pb-6 m-6 md:text-left font-Lato text-4xl text-gray-700">Welcome Back, {user.name}</h1>
+                    <h1 className="text-center font-Lato pb-6 m-6 md:text-left font-Lato text-4xl text-gray-700">Welcome Back, {user.name}</h1>
                     <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange} openModal={openModal}/>
                     <div className="flex flex-col justify-center align-center px-6">
                         {error && 
@@ -158,7 +158,7 @@ const Home = ({history}) => {
                                         <div className="flex flex-col md:pl-4 content-between md:w-full lg:flex-grow">
                                             <div className="flex flex-row justify-between md:py-0 sm:py-2">
                                                 <div>
-                                                    <h2 className="font-BowlbyOne text-2xl pb-1">{set.name}</h2>
+                                                    <h2 className="font-Lato text-2xl pb-1 text-gray-700">{set.name}</h2>
                                                     <h6 className="font-sans text-md text-gray-400">Created By: <span className="text-yellow-500">{set.user.name}</span></h6>
                                                 </div>
                                                 <div>
