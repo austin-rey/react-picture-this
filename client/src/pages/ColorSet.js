@@ -65,8 +65,8 @@ const ColorSet = ({history}) => {
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto">
-                <div className="flex flex-col justify-center align-center p-6">
-                    <div className="m-6 p-10 bg-white shadow-lg rounded-md">
+                <div className="flex flex-col justify-center align-center pt-6">
+                    <div className="mt-6 p-10 bg-white shadow-lg rounded-md">
                         {error && 
                             <Error message={error.message}/>
                         }
@@ -79,7 +79,7 @@ const ColorSet = ({history}) => {
                             <Link className="underline text-green-500" to="/sets">Back</Link>
                             <div className="flex flex-row justify-between items-start flex-grow px-4 pt-8 pb-2">
                                 <div>
-                                    <h1 className="font-sans text-4xl pb-1">{data[0].name}</h1>
+                                    <h1 className=" font-Lato text-4xl text-gray-700 pb-1">{data[0].name}</h1>
                                     <h6 className="font-sans text-md text-gray-400">Created by: <span className="text-bold text-yellow-500">{data[0].user.name}</span></h6>
                                 </div>
                                 <div className="flex flex-row">
@@ -94,7 +94,7 @@ const ColorSet = ({history}) => {
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center align-center p-4">
-                                <h2 className="font-sans text-2xl pb-1">Pallette</h2>
+                                <h2 className="font-BowlbyOne text-3xl pb-1">Pallette</h2>
                                 <h6 className="font-sans text-md text-gray-400 pb-2">Vibrant colors found in your image.</h6>
                                 <div className="flex flex-row justify-items-stretch p-4 justify-evenly">
                                     {data[0].pallette.map((color,i) => (
@@ -105,7 +105,7 @@ const ColorSet = ({history}) => {
                                 </div>
                             </div>
                             <div className="flex flex-col p-4">
-                                <h2 className="font-sans text-2xl pb-1">Colors By Hue</h2>
+                                <h2 className="font-BowlbyOne text-3xl pb-1">Colors By Hue</h2>
                                 <h6 className="font-sans text-md text-gray-400">Color scales found in your image based off <a className="underline text-green-500" href="https://www.december.com/html/spec/colorhsltable.html" target="_blank">hue ranges</a> corresponding to angular positions found on a <a className="underline text-green-500" href="https://en.wikipedia.org/wiki/Color_wheel" target="_blank">color wheel</a>. Narrow your results by adjusting the saturation and lightness ranges below. Each section shows the first 500 results.</h6>
                                 <ColorHueToolbar {...hueToolbarProps} />
                                 <div className="my-3">

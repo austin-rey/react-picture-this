@@ -36,7 +36,9 @@ module.exports = {
       sans: ['Graphik', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
       Lato: ['Lato','sans-serif'],
-      Mada: ['Mada','sans-serif']
+      Mada: ['Mada','sans-serif'],
+      BowlbyOne: ['Bowlby+One','sans-serif'],
+      Jaldi: ['Jaldi','sans-serif']
     }
   },
   variants: {

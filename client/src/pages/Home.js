@@ -136,7 +136,7 @@ const Home = ({history}) => {
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto pt-12 pb-12"> 
                 <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md">
-                    <h1 className="text-center font-sans text-3xl mb-10 mx-6 p-4 rounded-md bg-gray-100 md:text-left">Welcome Back, {user.name}</h1>
+                    <h1 className="text-center font-sans pb-6 m-6 md:text-left font-Lato text-4xl text-gray-700">Welcome Back, {user.name}</h1>
                     <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange} openModal={openModal}/>
                     <div className="flex flex-col justify-center align-center px-6">
                         {error && 
@@ -145,7 +145,7 @@ const Home = ({history}) => {
                         {(data) ? <>
                             {(data.data.length === 0) &&
                                <div className="flex flex-col w-full h-96 justify-center items-center p-4 my-2 border-4 border-gray-500 border-opacity-20 rounded-md">
-                                   <h1 className="flex font-sans text-3xl">No sets...</h1><br/>
+                                   <h1 className="flex font-Lato text-gray-700 text-4xl">No sets...</h1><br/>
                                    <h4 className="flex font-sans text-lg">Start by clicking the "Create Set" button in the above toolbar.</h4>
                                 </div>
                             }
@@ -155,23 +155,27 @@ const Home = ({history}) => {
                                         <div className="w-full lg:w-72 h-48 bg-gray-100 rounded-md p-2">
                                             <img className="h-full m-auto mh-05 rounded-md" src={set.image} alt={set.name}/>
                                         </div>
-                                        <div className="flex flex-col py-1 md:pl-4 content-between md:w-full lg:flex-grow">
-                                            <div className="sm:py-2">
-                                                <h2 className="font-sans text-2xl pb-2">{set.name}</h2>
-                                                <h6 className="font-sans text-md pb-2 text-gray-400">Created By: {set.user.name}</h6>
+                                        <div className="flex flex-col md:pl-4 content-between md:w-full lg:flex-grow">
+                                            <div className="flex flex-row justify-between md:py-0 sm:py-2">
+                                                <div>
+                                                    <h2 className="font-BowlbyOne text-2xl pb-1">{set.name}</h2>
+                                                    <h6 className="font-sans text-md text-gray-400">Created By: <span className="text-yellow-500">{set.user.name}</span></h6>
+                                                </div>
+                                                <div>
+                                                    <div className="bg-green-700 rounded-md flex flex-grow items-center text-white cursor-pointer font-bold hover:bg-green-900">
+                                                        <Link className="w-full h-full" to={`../set/${set._id}`}>
+                                                            <p className="flex items-center w-full h-full p-4">View Set</p>
+                                                        </Link>
+                                                    </div>  
+                                                </div>
                                             </div>
-                                            <div className="flex flex-col md:flex-row justify-start items-start flex-grow h-full">
+                                            <div className="flex flex-col md:flex-row justify-start items-center flex-grow h-full">
                                                 {set.pallette.map((color,i) => (
                                                     <div key={i} className="w-20 h-20 mr-8 transform hover:scale-125">
                                                         <ColorRectangle hex={Object.values(color).toString()} className="rounded-full shadow-lg"/>
                                                     </div>
                                                 ))}
                                             </div>
-                                        </div>
-                                        <div className="bg-green-700 rounded-md flex flex-grow items-center text-white cursor-pointer font-bold hover:bg-green-900">
-                                            <Link className="w-full h-full" to={`../set/${set._id}`}>
-                                                <p className="flex items-center w-full h-full p-4">view</p>
-                                            </Link>
                                         </div>
                                     </div>
                             ))}
@@ -206,7 +210,7 @@ const Home = ({history}) => {
             >
                 <div className="p-6">
                     <div className="flex flex-row justify-between items-start divide-black mb-2">
-                        <h2 className="font-sans text-2xl pb-2">Create a New Set</h2>
+                        <h2 className="font-Lato text-gray-700 text-2xl pb-2">Create a New Set</h2>
                         <button className="p-1 text-white rounded-lg" onClick={closeModal}><RiCloseCircleFill className="text-gray-700 w-6 h-6"/></button>
                     </div>
                     {errorImage && 
@@ -215,13 +219,13 @@ const Home = ({history}) => {
                     {isLoadingImage && <Spinner/>}
                     <form onSubmit={imageSubmit} encType="multipart/form-data" className="w-96">
                         <div className="mb-6">
-                            <p className="w-full py-2 text-left text-lg">Name</p>
+                            <label htmlFor="name-field" className="w-full leading-10 text-left text-xl font-sans">Name</label>
                             <p className="font-sans text-xs pb-2 text-yellow-500"> Must be 6 - 64 characters</p>
                             <input type="text" id="name-field" name="name" placeholder="Enter a set name..." value={uploadedImage.name} className="w-full p-2 rounded-md border-4  border-gray-500 border-opacity-20 focus:border-green-500 outline-none" onChange={nameChange}/>
                         </div>
                         <div className="mb-6">
-                            <p className="w-full py-2 text-left text-lg">Image</p>
-                            <p className="font-sans text-xs pb-2 text-yellow-500">JPEG/JPG - 3 MB Limit</p>
+                            <label htmlFor="mage-upload-button" className="w-full leading-10 text-left text-xl font-sans">Image</label>
+                            <p className="font-sans text-xs pb-2 text-yellow-500">JPEG/JPG - 100 KB Limit</p>
                             <input className="text-center flex mb-4 bg-gray-100 p-1 rounded-md w-full" type="file" id="image-upload-button" name="setImage" accept="image/png, image/jpeg" onChange={handleImageUpload}/>
                         </div>
                         <input disabled={(uploadedImage.file !== undefined && uploadedImage.name.length>=6 && uploadedImage.name.length<=64)?false:true} type="submit" value="Upload" className="font-bold w-full p-2 bg-green-700 text-white rounded-md cursor-pointer opacity-100 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-900"/>

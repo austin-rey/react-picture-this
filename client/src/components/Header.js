@@ -21,7 +21,7 @@ const Header = ({history}) => {
                 <div className="flex flex-wrap justify-between flex-row p-4">
                     <div className="flex flex-row">
                         <MdFilterFrames className="text-white text-xl m-1"/>
-                        <h6 className="text-white font-sans text-xl">Picture This</h6>
+                        <h6 className="text-white font-Mada text-xl ml-1">Picture This</h6>
                     </div>
                     <div className="flex flex-row">
                         <p><Link to="/" className="p-2 text-white font-sans font-bold text-sm">Home</Link></p>

@@ -1,5 +1,8 @@
 node_modules
 config
-.tailwind.output.css
 todo
-public
+
+test-images
+/client/build
+/client/src/tailwind.output.css
+client/.eslintcache
