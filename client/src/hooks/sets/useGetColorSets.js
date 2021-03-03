@@ -1,5 +1,4 @@
 import { useState,useCallback } from 'react';
-import PropTypes from 'prop-types'
 import picturethis from '../../api/picturethis'
 
 export const getColorSets = async ({paginationOptions,searchQuery="",sort="lowercaseName",page="1"}) => {

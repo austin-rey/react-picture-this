@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 
 const SetsToolbar = ({searchQuery,searchChange,sortSelect,sortChange,openModal}) => {
     return (
-        <div className="flex flex-col justify-between mx-6 md:flex-row">
+        <div className="flex flex-col justify-between mx-6 mb-4 md:flex-row">
             <div className="flex flex-col items-center w-full md:mr-5 md:text-left">
                 <p className="w-full py-2 text-center text-lg pl-1 md:text-left">Search Sets</p>
                 <input type="search" id="setSearch" name="search" placeholder="Complete Set Name..." className="w-full p-2 rounded-md border-4 border-4 border-gray-500 border-opacity-20 focus:border-green-500 outline-none h-full hover:border-green-500" onChange={searchChange} value={searchQuery}/>

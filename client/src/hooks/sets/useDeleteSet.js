@@ -1,11 +1,7 @@
 import { useState,useCallback } from 'react';
-
-import PropTypes from 'prop-types'
-
 import picturethis from '../../api/picturethis'
 
 export const deleteSet = async ({id}) => {
-    console.log(id)
   const response = await picturethis.delete(`set/${id}`,{ withCredentials: true });
   return response;
 }

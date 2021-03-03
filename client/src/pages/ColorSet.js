@@ -17,7 +17,6 @@ const ColorSet = ({history}) => {
         execute
     } = useGetColorSet();
 
-    console.log(data)
     const { 
         isLoading: isLoadingDelete,
         data: dataDelete,
@@ -54,7 +53,7 @@ const ColorSet = ({history}) => {
     const {getToken,user}= session;
     useEffect(() => {
         const tokenExists = getToken();
-        if(tokenExists != undefined){
+        if(tokenExists !== undefined){
             execute(id);
             window.scroll(0,0);
         } else {
@@ -94,19 +93,19 @@ const ColorSet = ({history}) => {
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center align-center p-4">
-                                <h2 className="font-BowlbyOne text-3xl pb-1">Pallette</h2>
-                                <h6 className="font-sans text-md text-gray-400 pb-2">Vibrant colors found in your image.</h6>
+                                <h2 className="font-BowlbyOne text-3xl pb-1 md:text-left text-center">Pallette</h2>
+                                <h6 className="font-sans text-md text-gray-400 pb-2 md:text-left text-center">Vibrant colors found in your image.</h6>
                                 <div className="flex flex-row justify-items-stretch p-4 justify-evenly">
                                     {data[0].pallette.map((color,i) => (
-                                        <div key={i} className="w-32 h-32 transform hover:scale-125">
+                                        <div key={i} className="w-12 h-12 md:w-32 md:h-32 transform hover:scale-125">
                                             <ColorRectangle hex={Object.values(color).toString()} className="rounded-full shadow-lg"/>
                                         </div>
                                     ))}
                                 </div>
                             </div>
                             <div className="flex flex-col p-4">
-                                <h2 className="font-BowlbyOne text-3xl pb-1">Colors By Hue</h2>
-                                <h6 className="font-sans text-md text-gray-400">Color scales found in your image based off <a className="underline text-green-500" href="https://www.december.com/html/spec/colorhsltable.html" target="_blank">hue ranges</a> corresponding to angular positions found on a <a className="underline text-green-500" href="https://en.wikipedia.org/wiki/Color_wheel" target="_blank">color wheel</a>. Narrow your results by adjusting the saturation and lightness ranges below. Each section shows the first 500 results.</h6>
+                                <h2 className="font-BowlbyOne text-3xl pb-1 md:text-left text-center">Colors By Hue</h2>
+                                <h6 className="font-sans text-md text-gray-400 md:text-left text-center">Color scales found in your image based off <a className="underline text-green-500" href="https://www.december.com/html/spec/colorhsltable.html" target="_blank" rel="noreferrer">hue ranges</a> corresponding to angular positions found on a <a className="underline text-green-500" href="https://en.wikipedia.org/wiki/Color_wheel" target="_blank" rel="noreferrer">color wheel</a>. Narrow your results by adjusting the saturation and lightness ranges below. Each section shows the first 500 results.</h6>
                                 <ColorHueToolbar {...hueToolbarProps} />
                                 <div className="my-3">
                                     <div className="flex flex-row justify-between border-b-4 border-gray-500 border-opacity-20 mb-2">

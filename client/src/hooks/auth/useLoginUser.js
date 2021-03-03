@@ -14,7 +14,6 @@ export const loginUser = async ({loginUser}) => {
     },
     withCredentials: true
   })
-  console.log(response)
   return response;
 }
 
@@ -49,6 +48,6 @@ export const useLoginUser = () => {
     isLoading,
     data,
     error,
-    execute: useCallback(execute, [])
+    execute: useCallback(execute)
   };
 }

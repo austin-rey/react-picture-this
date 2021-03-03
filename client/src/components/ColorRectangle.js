@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {AiFillCopy} from "react-icons/ai"
 import {invertColor} from '../util/color'
 
-const copyToClipboard = (e, value) => {
+const copyToClipboard = (e) => {
     e.preventDefault();
     navigator.clipboard.writeText(e.target.value) 
 }

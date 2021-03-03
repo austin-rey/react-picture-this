@@ -1,7 +1,6 @@
-import React, {useContext,useState,useEffect} from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch,useHistory,Redirect } from 'react-router-dom'
 import AuthState from '../context/authState'
-import AuthContext from '../context/authContext';
 import Landing from '../pages/Landing'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
@@ -10,18 +9,7 @@ import ColorSet from '../pages/ColorSet'
 import Header from './Header'
 import Footer from './Footer'
 
-
-const ProtectedHandler = ({ history }) => {
-    const session = useContext(AuthContext);
-
-    if (session === undefined) {
-      history.push("/login");
-    }
-    return null;
-};
-
 const Routes = () => {
-
     let history = useHistory();
 
     return (

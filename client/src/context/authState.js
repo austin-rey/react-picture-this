@@ -11,24 +11,23 @@ const AuthState = (props) => {
 
     // Add Token
     const addToken = (token) => {
-        Cookies.remove('token')
-        Cookies.set('token', token)
-        setToken(token)
+      Cookies.remove('token')
+      Cookies.set('token', token)
+      setToken(token)
     }
 
     // Delete Token
     const deleteToken = () => {
-        Cookies.remove('token')
-        setToken(undefined)
+      Cookies.remove('token')
+      setToken(undefined)
     }
 
     // Get Token
     const getToken = () => {
-        return token
+      return token
     }
 
     const userLogin = (user) => {
-      console.log(user)
       Cookies.set('user-name', user.name)
       Cookies.set('user-email', user.email)
       setUser(user)
@@ -40,20 +39,20 @@ const AuthState = (props) => {
     }
 
     return (
-        <AuthContext.Provider
-          value={{
-            token: token,
-            user: user,
-            addToken,
-            deleteToken,
-            getToken,
-            userLogin,
-            logoutUser
-          }}
-        >
-          {props.children}
-        </AuthContext.Provider>
-      );
+      <AuthContext.Provider
+        value={{
+          token: token,
+          user: user,
+          addToken,
+          deleteToken,
+          getToken,
+          userLogin,
+          logoutUser
+        }}
+      >
+        {props.children}
+      </AuthContext.Provider>
+  );
 }
 
 export default AuthState

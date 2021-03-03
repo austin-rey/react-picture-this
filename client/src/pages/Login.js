@@ -1,5 +1,4 @@
 import React,{useState, useEffect,useContext} from 'react'
-import { BrowserRouter as Router,Link } from 'react-router-dom'
 import { useLoginUser } from '../hooks/auth/useLoginUser'
 import LoginForm from '../components/LoginForm'
 import AuthContext from '../context/authContext';
@@ -36,12 +35,13 @@ const Login = ({history}) => {
     // Redirect if user is logged in
     useEffect(() => {
         const tokenExists = getToken();
-        if(tokenExists != undefined){
+        if(tokenExists !== undefined){
             history.push('/sets')
         }
     }, [data])
+    
     return (
-        <div className="root h-screen bg-green-700">
+        <div className="root bg-green-700" style={{minHeight: 'calc(100vh - 115px)'}}>
             <div className="container h-full w-full md:w-2/3 lg:w-2/3 xl:w-1/3 mx-auto pt-12 pb-12"> 
                 <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md ">
                     {error && 

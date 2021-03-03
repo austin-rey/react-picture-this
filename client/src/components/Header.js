@@ -5,7 +5,6 @@ import AuthContext from "../context/authContext";
 import {MdFilterFrames} from "react-icons/md"
 
 const Header = ({history}) => {
-
     const session = useContext(AuthContext);
     const {deleteToken,token,logoutUser}= session;
     
@@ -16,7 +15,7 @@ const Header = ({history}) => {
     }
 
     return (
-        <div className="root bg-green-700">
+        <div className="root bg-green-700" style={{minHeight: '60px'}}>
             <div className="container w-full mx-auto">
                 <div className="flex flex-wrap justify-between flex-row p-4">
                     <div className="flex flex-row">
@@ -39,7 +38,6 @@ const Header = ({history}) => {
                 </div>
              </div>
         </div>
-       
     )
 }
 

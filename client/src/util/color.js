@@ -28,6 +28,7 @@ export const invertColor = (hex, bw) => {
     // pad each with zeros and return
     return "#" + padZero(r) + padZero(g) + padZero(b);
 }
+
 function padZero(str, len) {
     len = len || 2;
     var zeros = new Array(len).join('0');

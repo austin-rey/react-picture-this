@@ -1,9 +1,5 @@
 import { useState,useCallback } from 'react';
-
 import PropTypes from 'prop-types'
-
-import axios from "axios";
-
 import picturethis from '../../api/picturethis'
 
 export const getColorSet = async (setId) => {

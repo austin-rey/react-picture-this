@@ -49,22 +49,6 @@ const Home = ({history}) => {
         setUploadedImage({...uploadedImage, file: e.target.files[0]})
     }
 
-    // Session and Initial Loading ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    const session = useContext(AuthContext);
-    const {getToken,user}= session;
-
-    useEffect(() => {
-        const tokenExists = getToken();
-        if(tokenExists != undefined){
-            execute({
-                paginationOptions,
-                sortSelect,
-                searchQuery});
-        } else {
-            history.push('/')
-        }
-    }, [])
-
     // Modal ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const modalStyles = {
         content : {
@@ -132,6 +116,22 @@ const Home = ({history}) => {
         })
     }
 
+    // Session and Initial Loading ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    const session = useContext(AuthContext);
+    const {getToken,user}= session;
+
+    useEffect(() => {
+        const tokenExists = getToken();
+        if(tokenExists !== undefined){
+            execute({
+                paginationOptions,
+                sortSelect,
+                searchQuery});
+        } else {
+            history.push('/')
+        }
+    }, [])
+
     return (
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto pt-12 pb-12"> 
@@ -144,34 +144,33 @@ const Home = ({history}) => {
                         }
                         {(data) ? <>
                             {(data.data.length === 0) &&
-                               <div className="flex flex-col w-full h-96 justify-center items-center p-4 my-2 border-4 border-gray-500 border-opacity-20 rounded-md">
-                                   <h1 className="flex font-Lato text-gray-700 text-4xl">No sets...</h1><br/>
+                               <div className="flex flex-col w-full h-96 justify-center items-center p-4 mb-2 border-4 border-gray-500 border-opacity-20 rounded-md" style={{minHeight: '801px'}}>
+                                   <h1 className="flex font-Lato text-gray-700 text-4xl">No Sets Found</h1><br/>
                                    <h4 className="flex font-sans text-lg">Start by clicking the "Create Set" button in the above toolbar.</h4>
                                 </div>
                             }
-                            <div className="flex flex-col px-4 pt-8 border-b-4 border-gray-500 border-opacity-20"></div>
                             {data.data.map((set,i) => (
-                                    <div className="flex flex-col text-center align-center py-4 border-b-4 border-gray-200 md:flex-row md:text-left md:py-6" key={set._id}>
+                                    <div className="flex flex-col text-center align-center py-4 border-b-4 border-gray-200 lg:flex-row lg:text-left lg:py-6" key={set._id}>
                                         <div className="w-full lg:w-72 h-48 bg-gray-100 rounded-md p-2">
                                             <img className="h-full m-auto mh-05 rounded-md" src={set.image} alt={set.name}/>
                                         </div>
-                                        <div className="flex flex-col md:pl-4 content-between md:w-full lg:flex-grow">
-                                            <div className="flex flex-row justify-between md:py-0 sm:py-2">
+                                        <div className="flex flex-col lg:pl-8 content-between lg:w-full lg:flex-grow">
+                                            <div className="flex flex-col lg:flex-row justify-between lg:py-0 sm:py-2">
                                                 <div>
                                                     <h2 className="font-Lato text-2xl pb-1 text-gray-700">{set.name}</h2>
                                                     <h6 className="font-sans text-md text-gray-400">Created By: <span className="text-yellow-500">{set.user.name}</span></h6>
                                                 </div>
                                                 <div>
-                                                    <div className="bg-green-700 rounded-md flex flex-grow items-center text-white cursor-pointer font-bold hover:bg-green-900">
+                                                    <div className="bg-green-700 rounded-md flex flex-grow items-center text-white cursor-pointer font-bold hover:bg-green-900 mt-2 lg:mt-0">
                                                         <Link className="w-full h-full" to={`../set/${set._id}`}>
-                                                            <p className="flex items-center w-full h-full p-4">View Set</p>
+                                                            <p className="flex items-center w-full h-full p-4 justify-center">View Set</p>
                                                         </Link>
                                                     </div>  
                                                 </div>
                                             </div>
-                                            <div className="flex flex-col md:flex-row justify-start items-center flex-grow h-full">
+                                            <div className="flex flex-row md:flex-row md:w-full lg:justify-start justify-between lg:justify-start my-4 lg:my-0 items-center flex-grow h-full">
                                                 {set.pallette.map((color,i) => (
-                                                    <div key={i} className="w-20 h-20 mr-8 transform hover:scale-125">
+                                                    <div key={i} className="w-10 h-10 md:w-20 md:h-20 lg:mr-8 transform hover:scale-125">
                                                         <ColorRectangle hex={Object.values(color).toString()} className="rounded-full shadow-lg"/>
                                                     </div>
                                                 ))}
@@ -191,7 +190,7 @@ const Home = ({history}) => {
                                 nextLinkClassName={"bg-green-700 text-white rounded-md p-5 m-2 hover:bg-green-900"}
                                 disabledClassName={"pagination__link--disabled opacity-50 cursor-not-allowed"}
                                 activeClassName={"pagination__link--active text-white"}
-                                pageLinkClassName={"bg-white text-green-700 rounded-md p-4 m-2 border-4 border-green-700 border-opacity-50 hover:border-opacity-100 outline-none"}
+                                pageLinkClassName={"bg-white text-gray-700 rounded-md p-4 m-2 border-4 border-gray-300 border-opacity-50 hover:border-opacity-100 outline-none"}
                                 activeLinkClassName={" border-opacity-100"}
                             />
 

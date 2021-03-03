@@ -8,7 +8,6 @@ export const uploadImage = async ({formData}) => {
     formData,
     {headers: {'content-type': 'multipart/form-data'}, withCredentials: true },
   );
-  
   return response;
 }
 

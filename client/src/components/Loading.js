@@ -1,5 +1,5 @@
 import React from 'react'
-import Spinner from './Spinner'
+
 const Loading = () => {
     return (
         <div className="flex w-full h-screen bg-gray-100 items-center justify-center animate-pulse rounded-md">
