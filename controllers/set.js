@@ -97,12 +97,9 @@ exports.create = asyncHandler(async (req, res, next) => {
         });
     }
 
-    // Create a url to serve image in static folder
-    const staticImagePath = `/images/${req.file.filename}`
-
     const set = await Set.create({
         name: clean(req.body.name),
-        image:  staticImagePath,
+        image:  req.imageLocation,
         user: req.body.user,
         pallette: vibrantColors,
         colorRange: hueColorArrs
