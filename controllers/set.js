@@ -43,7 +43,8 @@ exports.create = asyncHandler(async (req, res, next) => {
 
     const set = await Set.create({
         name: clean(req.body.name),
-        image:  req.imageLocation,
+        imageName: req.file.filename,
+        imagePath:  req.imageLocation,
         user: req.body.user,
         pallette: vibrantColors,
         colorRange: hueColorArrs

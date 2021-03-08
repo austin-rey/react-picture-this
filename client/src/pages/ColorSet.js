@@ -69,7 +69,7 @@ const ColorSet = ({history}) => {
                             </div>
                             <div className="flex flex-col justify-center align-center pb-4 pt-1 px-4">
                                 <div className="w-full h-full bg-gray-100 py-4 rounded-md" >
-                                    <img src={data[0].image} alt="Uploaded image for this data set" className="m-auto rounded-md" />
+                                    <img src={data[0].imagePath} alt="Uploaded image for this data set" className="m-auto rounded-md" />
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center align-center p-4">
@@ -91,8 +91,8 @@ const ColorSet = ({history}) => {
                                         <h6 className="font-sans font-bold text-lg py-2 border-b-4 border-gray-500 border-opacity-20 mb-2 text-center w-full text-gray-700">Vibrant</h6>
                                         <div className="flex md:flex-col pt-1 pb-4 md:pb-0 md:p-4 items-center w-full justify-evenly">
                                             {data[0].colorRange.Vibrant.slice(1, -1).map((color,i) => (
-                                                <div key={i} className="w-8 h-8 md:w-16 md:h-16 mb-4 transform hover:scale-125">
-                                                    <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
+                                                <div key={i} className="w-8 h-8 md:w-full md:h-16 mb-4 transform hover:scale-125">
+                                                    <ColorSwatch hex={color} className="rounded-md w-full shadow-lg"/>
                                                 </div>
                                             ))}
                                         </div>
@@ -101,8 +101,8 @@ const ColorSet = ({history}) => {
                                         <h6 className="font-sans font-bold text-lg py-2 border-b-4 border-gray-500 border-opacity-20 mb-2 text-center w-full text-gray-700">Dark Vibrant</h6>
                                         <div className="flex md:flex-col pt-1 pb-4 md:pb-0 md:p-4 items-center w-full justify-evenly">
                                             {data[0].colorRange.DarkVibrant.slice(1, -1).map((color,i) => (
-                                                <div key={i} className="w-8 h-8 md:w-16 md:h-16 mb-4 transform hover:scale-125">
-                                                    <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
+                                                <div key={i} className="w-8 h-8 md:w-full md:h-16 mb-4 transform hover:scale-125">
+                                                    <ColorSwatch hex={color} className="rounded-md w-full shadow-lg"/>
                                                 </div>
                                             ))}
                                         </div>
@@ -112,8 +112,8 @@ const ColorSet = ({history}) => {
                                         <h6 className="font-sans font-bold text-lg py-2 border-b-4 border-gray-500 border-opacity-20 mb-2 text-center w-full text-gray-700">Light Vibrant</h6>
                                         <div className="flex md:flex-col pt-1 pb-4 md:pb-0 md:p-4 items-center w-full justify-evenly">
                                             {data[0].colorRange.LightVibrant.slice(1, -1).map((color,i) => (
-                                                <div key={i} className="w-8 h-8 md:w-16 md:h-16 mb-4 transform hover:scale-125">
-                                                    <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
+                                                <div key={i} className="w-8 h-8 md:w-full md:h-16 mb-4 transform hover:scale-125">
+                                                    <ColorSwatch hex={color} className="rounded-md w-full shadow-lg"/>
                                                 </div>
                                             ))}
                                         </div>
@@ -122,8 +122,8 @@ const ColorSet = ({history}) => {
                                         <h6 className="font-sans font-bold text-lg py-2 border-b-4 border-gray-500 border-opacity-20 mb-2 text-center w-full text-gray-700">Muted</h6>
                                         <div className="flex md:flex-col pt-1 pb-4 md:pb-0 md:p-4 items-center w-full justify-evenly">
                                             {data[0].colorRange.Muted.slice(1, -1).map((color,i) => (
-                                                <div key={i} className="w-8 h-8 md:w-16 md:h-16 mb-4 transform hover:scale-125">
-                                                    <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
+                                                <div key={i} className="w-8 h-8 md:w-full md:h-16 mb-4 transform hover:scale-125">
+                                                    <ColorSwatch hex={color} className="rounded-md w-full shadow-lg"/>
                                                 </div>
                                             ))}
                                         </div>
@@ -132,8 +132,8 @@ const ColorSet = ({history}) => {
                                         <h6 className="font-sans font-bold text-lg py-2 border-b-4 border-gray-500 border-opacity-20 mb-2 text-center w-full text-gray-700">Dark Muted</h6>
                                         <div className="flex md:flex-col pt-1 pb-4 md:pb-0 md:p-4 items-center w-full justify-evenly">
                                             {data[0].colorRange.DarkMuted.slice(1, -1).map((color,i) => (
-                                                <div key={i} className="w-8 h-8 md:w-16 md:h-16 mb-4 transform hover:scale-125">
-                                                    <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
+                                                <div key={i} className="w-8 h-8 md:w-full md:h-16 mb-4 transform hover:scale-125">
+                                                    <ColorSwatch hex={color} className="rounded-md w-full shadow-lg"/>
                                                 </div>
                                             ))}
                                         </div>
@@ -142,8 +142,8 @@ const ColorSet = ({history}) => {
                                         <h6 className="font-sans font-bold text-lg py-2 border-b-4 border-gray-500 border-opacity-20 mb-2 text-center w-full text-gray-700">Light Muted</h6>
                                         <div className="flex md:flex-col pt-1 pb-4 md:pb-0 md:p-4 items-center w-full justify-evenly">
                                             {data[0].colorRange.LightMuted.slice(1, -1).map((color,i) => (
-                                                <div key={i} className="w-8 h-8 md:w-16 md:h-16 mb-4 transform hover:scale-125">
-                                                    <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
+                                                <div key={i} className="w-8 h-8 md:w-full md:h-16 mb-4 transform hover:scale-125">
+                                                    <ColorSwatch hex={color} className="rounded-md w-full shadow-lg"/>
                                                 </div>
                                             ))}
                                         </div>

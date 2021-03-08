@@ -136,13 +136,13 @@ const Home = ({history}) => {
         <div className="root h-full bg-green-700">
             <div className="container w-full mx-auto pt-12 pb-12"> 
                 <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md">
+                    {error && 
+                        <Error message={error.message}/>
+                    }
+                    {(data) ? <>
                     <h1 className="text-center font-Lato pb-6 m-6 md:text-left font-Lato text-4xl text-gray-700">Welcome Back, {user.name}</h1>
                     <SetsToolbar searchQuery={searchQuery} searchChange={searchChange} sortSelect={sortSelect} sortChange={sortChange} openModal={openModal}/>
                     <div className="flex flex-col justify-center align-center px-6">
-                        {error && 
-                            <Error message={error.message}/>
-                        }
-                        {(data) ? <>
                             {(data.data.length === 0) &&
                                <div className="flex flex-col w-full h-96 justify-center items-center p-4 mb-2 border-4 border-gray-500 border-opacity-20 rounded-md" style={{minHeight: '801px'}}>
                                    <h1 className="flex font-Lato text-gray-700 text-4xl">No Sets Found</h1><br/>
@@ -152,7 +152,7 @@ const Home = ({history}) => {
                             {data.data.map((set,i) => (
                                     <div className="flex flex-col text-center align-center py-4 border-b-4 border-gray-200 lg:flex-row lg:text-left lg:py-6" key={set._id}>
                                         <div className="w-full lg:w-72 h-48 bg-gray-100 rounded-md p-2">
-                                            <img className="h-full m-auto mh-05 rounded-md" src={set.image} alt={set.name}/>
+                                            <img className="h-full m-auto mh-05 rounded-md" src={set.imagePath} alt={set.name}/>
                                         </div>
                                         <div className="flex flex-col lg:pl-8 content-between lg:w-full lg:flex-grow">
                                             <div className="flex flex-col lg:flex-row justify-between lg:py-0 sm:py-2">
@@ -195,10 +195,12 @@ const Home = ({history}) => {
                             />
 
                         </div>
-                        </>
-                        :<Loading/>
-                        }
+                        
+                        
                     </div>
+                    </>:<Loading/>
+                    }
+
                 </div>
             </div>
             <Modal
@@ -224,7 +226,7 @@ const Home = ({history}) => {
                         </div>
                         <div className="mb-6">
                             <label htmlFor="mage-upload-button" className="w-full leading-10 text-left text-xl font-sans">Image</label>
-                            <p className="font-sans text-xs pb-2 text-yellow-500">JPEG/JPG - 100 KB Limit</p>
+                            <p className="font-sans text-xs pb-2 text-yellow-500">JPEG/JPG - 1 MB Limit</p>
                             <input className="text-center flex mb-4 bg-gray-100 p-1 rounded-md w-full" type="file" id="image-upload-button" name="setImage" accept="image/png, image/jpeg" onChange={handleImageUpload}/>
                         </div>
                         <input disabled={(uploadedImage.file !== undefined && uploadedImage.name.length>=6 && uploadedImage.name.length<=64)?false:true} type="submit" value="Upload" className="font-bold w-full p-2 bg-green-700 text-white rounded-md cursor-pointer opacity-100 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-900"/>

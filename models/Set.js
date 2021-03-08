@@ -8,7 +8,11 @@ const SetSchema = new mongoose.Schema({
         min: [6, 'Title is must be more than or equal to 6 characters.'],
         max: [64, 'Title is must be less than or equal to 64 characters.']
     },
-    image: {
+    imageName: {
+        type: String,
+        required: [true, 'Please add an image name.']
+    },
+    imagePath: {
         type: String,
         required: [true, 'Please add an image path.']
     },
