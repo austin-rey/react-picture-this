@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Link } from 'react-router-dom'
-import ColorRectangle from '../components/ColorRectangle'
+import ColorSwatch from '../components/ColorSwatch'
 import ColorRange from '../components/ColorRange'
 
 const sampleColors = [
@@ -34,16 +34,16 @@ const Landing = () => {
                         <h3 className="font-Lato text-2xl font-bold text-green-700 mb-2 p-4 mx-8 mb-10">Discover color combinations by uploading an image that best captures your idea and/or end-product.</h3>
                         <p className="font-Mada text-xl text-gray-500 m-auto mb-8 border-b border-t w-4/5 py-4">For every image you uploaded, we create a set of colors that are parsed from your images data. Each set contains a pallette of vibrant colors and ranges of colors found between angular positions on a color wheel.</p>
                     </div>
-                <div className="flex lg:flex-col xl:flex-row text-center mb-12">
-                    <div className="lg:w-full xl:w-1/2 m-2 bg-gray-100 rounded-md">
-                            <img src="/Sunflower.jpg" alt="" className="w-full rounded-md"/>
+                <div className="flex flex-col text-center mb-12">
+                    <div className="w-full bg-gray-100 rounded-md items-center">
+                        <img src="/Sunflower.jpg" alt="" className="w-1/2 flex rounded-md m-auto p-2"/>
                     </div>
-                    <div className="flex lg:w-full xl:w-1/2 flex-col bg-gray-100 rounded-md m-2">
-                            <h2 className="font-Lato text-2xl font-bold text-gray-700 my-2 p-4 mx-8">Sunflower Color Set</h2>
+                    <div className="flex w-full flex-col bg-gray-100 rounded-md mt-4">
+                        <h2 className="font-Lato text-2xl font-bold text-gray-700 my-2 p-4 mx-8">Sunflower Color Set</h2>
                             <div className="flex flex-row justify-items-stretch p-4 justify-evenly bg-gray-100 mb-10">
                                 {sampleColors.map((color,i) => (
                                     <div key={i} className="w-20 h-20 transform hover:scale-125">
-                                        <ColorRectangle hex={color} className="rounded-full shadow-lg"/>
+                                        <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
                                     </div>
                                 ))}
                             </div>  
@@ -65,7 +65,7 @@ const Landing = () => {
                             <div className="p-2 rounded-md mb-8">
                                 <ColorRange saturationRange={range} lightnessRange={range} colorArr={magenta} />
                             </div>
-                    </div>
+                        </div>
                     </div>
                     <div className="flex flex-row justify-center w-full">
                         <div className="button font-sans p-4 w-64 bg-green-700 rounded-md text-white font-bold  cursor-pointer m-2 border-4 border-green-700"><Link to="/register">Create Account</Link></div>

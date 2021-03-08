@@ -27,7 +27,7 @@ const ColorHueToolbar = ({saturationRange,setSaturationRange,lightnessRange,setL
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col w-full md:w-6/12 md:ml-1 bg-gray-100 rounded-md">
+                <div className="flex flex-col w-full md:w-6/12 my-2 md:ml-1 bg-gray-100 rounded-md">
                     <h6 className="font-sans font-bold text-lg py-2 pl-1 text-center">Lightness</h6>
                     <div className="flex flex-row justify-between items-center bg-gray-100 p-4">
                         <div className="flex flex-col flex-grow text-center">

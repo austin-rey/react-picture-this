@@ -19,83 +19,27 @@ exports.create = asyncHandler(async (req, res, next) => {
     // Add user to req body
     req.body.user = req.user.id;
 
-    // Calculate colors
-    let hexColorArr;
-    //new Array(100).fill('#fff')
     let hueColorArrs = {
-        red:        [],
-        orange:     [],
-        yellow:     [],
-        green:      [],
-        blue:       [],
-        magenta:    [],
-    }
+        Vibrant:      [],
+        DarkVibrant:  [],
+        LightVibrant: [],
+        Muted:        [],
+        DarkMuted:    [],
+        LightMuted:   [],
+    };
 
-    let fileType = path.extname(req.file.path);
-
-    // Convert Uint8Array to array of hex values
-    function toHexString(byteArray) {
-        return byteArray.reduce((output, elem, i) => {
-            let hexString = (output + ('0' + elem.toString(16)).slice(-2))+'';
-            if((i+1)%4==0) {
-                return `${hexString}-#`
-            }
-            return hexString;
-        },['#'])
-    }
-
-    // Color pallette for this image
-    let vibrantColors = []
-    await Vibrant.from(req.file.path).getPalette()
+    // Return prominent colors found in the image
+    let vibrantColors = [];
+    await Vibrant.from(req.file.path).quality(3).getPalette()
         .then((palette) => {
+            console.log(palette)
             for(let color in palette) {
-                const type = color
-                const hex = palette[color].getHex()
-                vibrantColors.push({[type]: hex})
+                const type = color;
+                const hex = palette[color].getHex();
+                vibrantColors.push({[type]: hex});
+                hueColorArrs[type] = chroma.scale([chroma(hex).darken(6), hex, chroma(hex).brighten(6)]).colors(12);
             }
-        })
-
-    // Get hue ranges from image
-    if(fileType === '.jpg' || fileType === '.JPG') {
-        const buf = fs.readFileSync(req.file.path);
-
-        imageByteArr = inkjet.decode(buf, async (err, decoded) => {
-
-            const {data} = decoded;
-
-            // Array HEX-based color values from image data
-            hexColorArr = toHexString(Object.values(data)).split('-');
-
-            // Arrange colors into group based on Hue HSL value
-            await hexColorArr.map((hexValue) => {
-                if(chroma.valid(hexValue)){
-                    let hslValue =      chroma(hexValue).hsl();
-                    let hue =           hslValue[0];
-                    let saturation =    hslValue[1];
-                    let lightness =     hslValue[2];
-                    // console.log(hslValue)
-                    if((hue >= 0 && hue <= 12) || (hue >= 349 && hue <= 360)) {
-                        if(!hueColorArrs.red.includes(hexValue)) hueColorArrs.red.push(hexValue)
-                    } 
-                    else if(hue >= 13  && hue <= 36) {
-                        if(!hueColorArrs.orange.includes(hexValue)) hueColorArrs.orange.push(hexValue)
-                    }
-                    else if(hue >= 37  && hue <= 66) {
-                        if(!hueColorArrs.yellow.includes(hexValue)) hueColorArrs.yellow.push(hexValue)
-                    }
-                    else if(hue >= 67  && hue <= 162) {
-                        if(!hueColorArrs.green.includes(hexValue)) hueColorArrs.green.push(hexValue)
-                    }
-                    else if(hue >= 163 && hue <= 252) {
-                        if(!hueColorArrs.blue.includes(hexValue)) hueColorArrs.blue.push(hexValue)
-                    }
-                    else if(hue >= 253 && hue <= 348) {
-                        if(!hueColorArrs.magenta.includes(hexValue)) hueColorArrs.magenta.push(hexValue)
-                    }
-                }
-            })
-        });
-    }
+    })
 
     const set = await Set.create({
         name: clean(req.body.name),

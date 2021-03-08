@@ -47,7 +47,7 @@ const Login = ({history}) => {
                     {error && 
                         <Error message={error.message}/>
                     }
-                    <h1 className="font-Lato text-5xl p-4 text-center text-gray-700">Sign-In</h1>
+                    <h1 className="font-Lato text-5xl p-4 text-center text-gray-700">Login</h1>
                     <LoginForm onChange={updateLoginForm} formFields={loginUser} onSubmit={submitLoginUser}/>
                 </div>
             </div>

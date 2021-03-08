@@ -3,9 +3,7 @@ import { Link,useParams } from 'react-router-dom'
 import { useGetColorSet } from '../hooks/sets/useGetColorSet'
 import { useDeleteSet } from '../hooks/sets/useDeleteSet'
 import AuthContext from '../context/authContext';
-import ColorRectangle from '../components/ColorRectangle'
-import ColorRange from '../components/ColorRange'
-import ColorHueToolbar from '../components/ColorHueToolbar'
+import ColorSwatch from '../components/ColorSwatch'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 
@@ -28,24 +26,6 @@ const ColorSet = ({history}) => {
 
     const deleteSet = (e) => {
         executeDelete({id: data[0]._id, history})
-    }
-
-    // Range states
-    const [saturationRange, setSaturationRange] = useState({
-        min: '20',
-        max: '90'
-    })
-
-    const [lightnessRange, setLightnessRange] = useState({
-        min: '20',
-        max: '90'
-    })
-
-    const hueToolbarProps = {
-        saturationRange, 
-        setSaturationRange, 
-        lightnessRange, 
-        setLightnessRange,
     }
 
     // Verify user token is in cookies and apply redirect if necessary
@@ -93,82 +73,84 @@ const ColorSet = ({history}) => {
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center align-center p-4">
-                                <h2 className="font-BowlbyOne text-3xl pb-1 md:text-left text-center">Pallette</h2>
-                                <h6 className="font-sans text-md text-gray-400 pb-2 md:text-left text-center">Vibrant colors found in your image.</h6>
+                                <h2 className="font-BowlbyOne text-3xl pb-1 md:text-left text-center text-gray-700">Pallette</h2>
+                                <h6 className="font-sans text-md text-gray-400 pb-2 md:text-left text-center">Prominent colors found in your image.</h6>
                                 <div className="flex flex-row justify-items-stretch p-4 justify-evenly">
                                     {data[0].pallette.map((color,i) => (
-                                        <div key={i} className="w-12 h-12 md:w-32 md:h-32 transform hover:scale-125">
-                                            <ColorRectangle hex={Object.values(color).toString()} className="rounded-full shadow-lg"/>
+                                        <div key={i} className="w-16 h-16 mx-1 md:w-32 md:h-32 md:mx-0 transform hover:scale-125">
+                                            <ColorSwatch hex={Object.values(color).toString()} className="rounded-full shadow-lg"/>
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                            <div className="flex flex-col p-4">
-                                <h2 className="font-BowlbyOne text-3xl pb-1 md:text-left text-center">Colors By Hue</h2>
-                                <h6 className="font-sans text-md text-gray-400 md:text-left text-center">Color scales found in your image based off <a className="underline text-green-500" href="https://www.december.com/html/spec/colorhsltable.html" target="_blank" rel="noreferrer">hue ranges</a> corresponding to angular positions found on a <a className="underline text-green-500" href="https://en.wikipedia.org/wiki/Color_wheel" target="_blank" rel="noreferrer">color wheel</a>. Narrow your results by adjusting the saturation and lightness ranges below. Each section shows the first 500 results.</h6>
-                                <ColorHueToolbar {...hueToolbarProps} />
-                                <div className="my-3">
-                                    <div className="flex flex-row justify-between border-b-4 border-gray-500 border-opacity-20 mb-2">
-                                        <div className="flex flex-row items-end">
-                                            <h6 className="font-sans font-bold text-lg pb-1 flex ">Red</h6>
-                                            <span className="font-sans text-sm pb-2 text-yellow-500 font-normal ml-3">{'  '}{data[0].colorRange.red.length} results</span>
+                            <div className="flex flex-col p-0 md:p-4">
+                                <h2 className="font-BowlbyOne text-3xl pb-1 md:text-left text-center text-gray-700">Color Ranges</h2>
+                                <h6 className="font-sans text-md text-gray-400 md:text-left text-center">Color scales generated from the prominent colors found in your image.</h6>
+                                <div className="flex flex-col md:flex-row mt-6">
+                                    <div className="flex flex-col flex-grow w-full md:w-1/6 md:border-r-4 border-gray-500 border-opacity-20">
+                                        <h6 className="font-sans font-bold text-lg py-2 border-b-4 border-gray-500 border-opacity-20 mb-2 text-center w-full text-gray-700">Vibrant</h6>
+                                        <div className="flex md:flex-col pt-1 pb-4 md:pb-0 md:p-4 items-center w-full justify-evenly">
+                                            {data[0].colorRange.Vibrant.slice(1, -1).map((color,i) => (
+                                                <div key={i} className="w-8 h-8 md:w-16 md:h-16 mb-4 transform hover:scale-125">
+                                                    <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
+                                                </div>
+                                            ))}
                                         </div>
-                                        <span className="font-sans text-sm pb-2 text-gray-400 font-normal flex items-end">&deg;0 - &deg;12 and &deg;349 - &deg;360 </span>
                                     </div>
-                                    <ColorRange saturationRange={saturationRange} lightnessRange={lightnessRange} colorArr={data[0].colorRange.red} />
-                                </div>
-                                <div className="my-3">
-                                    <div className="flex flex-row justify-between border-b-4 border-gray-500 border-opacity-20 mb-2">
-                                        <div className="flex flex-row items-end">
-                                            <h6 className="font-sans font-bold text-lg pb-1 flex">Orange</h6>
-                                            <span className="font-sans text-sm pb-2 text-yellow-500 font-normal ml-3">{'  '}{data[0].colorRange.orange.length} results</span>
+                                    <div className="flex flex-col flex-grow w-full md:w-1/6 md:border-r-4 border-gray-500 border-opacity-20">
+                                        <h6 className="font-sans font-bold text-lg py-2 border-b-4 border-gray-500 border-opacity-20 mb-2 text-center w-full text-gray-700">Dark Vibrant</h6>
+                                        <div className="flex md:flex-col pt-1 pb-4 md:pb-0 md:p-4 items-center w-full justify-evenly">
+                                            {data[0].colorRange.DarkVibrant.slice(1, -1).map((color,i) => (
+                                                <div key={i} className="w-8 h-8 md:w-16 md:h-16 mb-4 transform hover:scale-125">
+                                                    <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
+                                                </div>
+                                            ))}
                                         </div>
-                                        <span className="font-sans text-sm pb-2 text-gray-400 font-normal flex items-end">&deg;13 - &deg;36 </span>
+
                                     </div>
-                                    <ColorRange saturationRange={saturationRange} lightnessRange={lightnessRange} colorArr={data[0].colorRange.orange} />
-                                </div>
-                                <div className="my-3">
-                                    <div className="flex flex-row justify-between border-b-4 border-gray-500 border-opacity-20 mb-2">
-                                        <div className="flex flex-row items-end">
-                                            <h6 className="font-sans font-bold text-lg pb-1 flex">Yellow</h6>
-                                            <span className="font-sans text-sm pb-2 text-yellow-500 font-normal ml-3">{'  '}{data[0].colorRange.yellow.length} results</span>
+                                    <div className="flex flex-col flex-grow w-full md:w-1/6 md:border-r-4 border-gray-500 border-opacity-20">
+                                        <h6 className="font-sans font-bold text-lg py-2 border-b-4 border-gray-500 border-opacity-20 mb-2 text-center w-full text-gray-700">Light Vibrant</h6>
+                                        <div className="flex md:flex-col pt-1 pb-4 md:pb-0 md:p-4 items-center w-full justify-evenly">
+                                            {data[0].colorRange.LightVibrant.slice(1, -1).map((color,i) => (
+                                                <div key={i} className="w-8 h-8 md:w-16 md:h-16 mb-4 transform hover:scale-125">
+                                                    <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
+                                                </div>
+                                            ))}
                                         </div>
-                                        <span className="font-sans text-sm pb-2 text-gray-400 font-normal flex items-end">&deg;37 - &deg;66 </span>
                                     </div>
-                                   
-                                    <ColorRange saturationRange={saturationRange} lightnessRange={lightnessRange} colorArr={data[0].colorRange.yellow} />
-                                </div>
-                                <div className="my-3">
-                                    <div className="flex flex-row justify-between border-b-4 border-gray-500 border-opacity-20 mb-2">
-                                        <div className="flex flex-row items-end">
-                                            <h6 className="font-sans font-bold text-lg pb-1 flex">Green</h6>
-                                            <span className="font-sans text-sm pb-2 text-yellow-500 font-normal ml-3">{'  '}{data[0].colorRange.green.length} results</span>
+                                    <div className="flex flex-col flex-grow w-full md:w-1/6 md:border-r-4 border-gray-500 border-opacity-20">
+                                        <h6 className="font-sans font-bold text-lg py-2 border-b-4 border-gray-500 border-opacity-20 mb-2 text-center w-full text-gray-700">Muted</h6>
+                                        <div className="flex md:flex-col pt-1 pb-4 md:pb-0 md:p-4 items-center w-full justify-evenly">
+                                            {data[0].colorRange.Muted.slice(1, -1).map((color,i) => (
+                                                <div key={i} className="w-8 h-8 md:w-16 md:h-16 mb-4 transform hover:scale-125">
+                                                    <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
+                                                </div>
+                                            ))}
                                         </div>
-                                        <span className="font-sans text-sm pb-2 text-gray-400 font-normal flex items-end">&deg;67 - &deg;162 </span>
                                     </div>
-                                    <ColorRange saturationRange={saturationRange} lightnessRange={lightnessRange} colorArr={data[0].colorRange.green} />
-                                </div>
-                                <div className="my-3">
-                                    <div className="flex flex-row justify-between border-b-4 border-gray-500 border-opacity-20 mb-2">
-                                        <div className="flex flex-row items-end">
-                                            <h6 className="font-sans font-bold text-lg pb-1 flex">Blue</h6>
-                                            <span className="font-sans text-sm pb-2 text-yellow-500 font-normal ml-3">{'  '}{data[0].colorRange.blue.length} results</span>
+                                    <div className="flex flex-col flex-grow w-full md:w-1/6 md:border-r-4 border-gray-500 border-opacity-20">
+                                        <h6 className="font-sans font-bold text-lg py-2 border-b-4 border-gray-500 border-opacity-20 mb-2 text-center w-full text-gray-700">Dark Muted</h6>
+                                        <div className="flex md:flex-col pt-1 pb-4 md:pb-0 md:p-4 items-center w-full justify-evenly">
+                                            {data[0].colorRange.DarkMuted.slice(1, -1).map((color,i) => (
+                                                <div key={i} className="w-8 h-8 md:w-16 md:h-16 mb-4 transform hover:scale-125">
+                                                    <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
+                                                </div>
+                                            ))}
                                         </div>
-                                        <span className="font-sans text-sm pb-2 text-gray-400 font-normal flex items-end"> &deg;163 - &deg;252 </span>
                                     </div>
-                                    <ColorRange saturationRange={saturationRange} lightnessRange={lightnessRange} colorArr={data[0].colorRange.blue} />
-                                </div>
-                                <div className="my-3">
-                                    <div className="flex flex-row justify-between border-b-4 border-gray-500 border-opacity-20 mb-2">
-                                        <div className="flex flex-row items-end">
-                                            <h6 className="font-sans font-bold text-lg pb-1 flex">Magenta</h6>
-                                            <span className="font-sans text-sm pb-2 text-yellow-500 font-normal ml-3">{'  '}{data[0].colorRange.magenta.length} results</span>
+                                    <div className="flex flex-col flex-grow w-full md:w-1/6">
+                                        <h6 className="font-sans font-bold text-lg py-2 border-b-4 border-gray-500 border-opacity-20 mb-2 text-center w-full text-gray-700">Light Muted</h6>
+                                        <div className="flex md:flex-col pt-1 pb-4 md:pb-0 md:p-4 items-center w-full justify-evenly">
+                                            {data[0].colorRange.LightMuted.slice(1, -1).map((color,i) => (
+                                                <div key={i} className="w-8 h-8 md:w-16 md:h-16 mb-4 transform hover:scale-125">
+                                                    <ColorSwatch hex={color} className="rounded-full shadow-lg"/>
+                                                </div>
+                                            ))}
                                         </div>
-                                        <span className="font-sans text-sm pb-2 text-gray-400 font-normal flex items-end">&deg;253 - &deg;348 </span>
                                     </div>
-                                    <ColorRange saturationRange={saturationRange} lightnessRange={lightnessRange} colorArr={data[0].colorRange.magenta} />
                                 </div>
                             </div>
+
                         </>
                         :<Loading/>
                         }

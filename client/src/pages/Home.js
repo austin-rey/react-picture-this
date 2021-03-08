@@ -4,7 +4,7 @@ import { useGetColorSets } from '../hooks/sets/useGetColorSets'
 import { useUploadImage } from '../hooks/sets/useUploadImage'
 import AuthContext from '../context/authContext';
 import Modal from 'react-modal';
-import ColorRectangle from '../components/ColorRectangle'
+import ColorSwatch from '../components/ColorSwatch'
 import SetsToolbar from '../components/SetsToolbar'
 import {RiCloseCircleFill} from "react-icons/ri"
 import ReactPaginate from 'react-paginate';
@@ -171,7 +171,7 @@ const Home = ({history}) => {
                                             <div className="flex flex-row md:flex-row md:w-full lg:justify-start justify-between lg:justify-start my-4 lg:my-0 items-center flex-grow h-full">
                                                 {set.pallette.map((color,i) => (
                                                     <div key={i} className="w-10 h-10 md:w-20 md:h-20 lg:mr-8 transform hover:scale-125">
-                                                        <ColorRectangle hex={Object.values(color).toString()} className="rounded-full shadow-lg"/>
+                                                        <ColorSwatch hex={Object.values(color).toString()} className="rounded-full shadow-lg"/>
                                                     </div>
                                                 ))}
                                             </div>
