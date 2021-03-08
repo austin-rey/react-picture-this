@@ -20,13 +20,19 @@ export const registerUser = async ({registerUser}) => {
 }
 
 registerUser.propTypes = {
-  formFields: PropTypes.object
+  registerUser: PropTypes.objectOf({
+    name: PropTypes.string,
+    email: PropTypes.string,
+    password: PropTypes.string,
+
+  })
 }
 
 export const useRegisterUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+
   const session = useContext(AuthContext);
   const {addToken,userLogin} = session;
 

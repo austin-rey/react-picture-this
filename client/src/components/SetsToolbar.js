@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 const SetsToolbar = ({searchQuery,searchChange,sortSelect,sortChange,openModal}) => {
     return (
@@ -18,5 +19,13 @@ const SetsToolbar = ({searchQuery,searchChange,sortSelect,sortChange,openModal})
         </div>
     )
 }
+
+SetsToolbar.propTypes = {
+    searchQuery: PropTypes.string,
+    searchChange: PropTypes.func,
+    sortSelect: PropTypes.string,
+    sortChange: PropTypes.func,
+    openModal: PropTypes.func
+};
 
 export default SetsToolbar

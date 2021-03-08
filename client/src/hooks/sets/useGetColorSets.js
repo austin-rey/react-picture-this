@@ -1,12 +1,19 @@
 import { useState,useCallback } from 'react';
 import picturethis from '../../api/picturethis'
+import PropTypes from 'prop-types'
 
 export const getColorSets = async ({paginationOptions,searchQuery="",sort="lowercaseName",page="1"}) => {
   const response = await picturethis.get(`set/?q=${searchQuery}&sort=${sort}&page=${page}&limit=${paginationOptions.limit}&select=-colorRange`,{ withCredentials: true });
   return response.data;
 }
 
-getColorSets.propTypes = {}
+getColorSets.propTypes = {
+  paginationOptions: PropTypes.object,
+  searchQuery: PropTypes.string,
+  sort: PropTypes.string,
+  page: PropTypes.string,
+
+}
 
 export const useGetColorSets = () => {
   const [isLoading, setIsLoading] = useState(false);

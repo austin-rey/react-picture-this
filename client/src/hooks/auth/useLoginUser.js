@@ -18,13 +18,17 @@ export const loginUser = async ({loginUser}) => {
 }
 
 loginUser.propTypes = {
-    formFields: PropTypes.object
+  loginUser: PropTypes.objectOf({
+    email: PropTypes.string,
+    password: PropTypes.string
+  })
 }
 
 export const useLoginUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+
   const session = useContext(AuthContext);
   const {addToken,userLogin} = session;
 
@@ -48,6 +52,6 @@ export const useLoginUser = () => {
     isLoading,
     data,
     error,
-    execute: useCallback(execute)
+    execute: useCallback(execute, [])
   };
 }

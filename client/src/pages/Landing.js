@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Link } from 'react-router-dom'
 import ColorSwatch from '../components/ColorSwatch'
-import ColorRange from '../components/ColorRange'
+import ColorRange from '../components/deprecated/ColorRange'
 
 const sampleColors = [
     '#f9ef08',

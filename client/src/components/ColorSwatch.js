@@ -1,6 +1,7 @@
 import React from 'react'
 import {AiFillCopy} from "react-icons/ai"
 import {invertColor} from '../util/color'
+import PropTypes from 'prop-types';
 
 const copyToClipboard = (e) => {
     e.preventDefault();
@@ -15,5 +16,12 @@ const ColorSwatch = (props) => {
         </div>
     )
 }
+
+ColorSwatch.propTypes = {
+    props: PropTypes.objectOf({
+        hex: PropTypes.string,
+        className: PropTypes.string,
+    })
+};
 
 export default ColorSwatch

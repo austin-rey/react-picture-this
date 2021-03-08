@@ -49,6 +49,7 @@ const Home = ({history}) => {
         setUploadedImage({...uploadedImage, file: e.target.files[0]})
     }
 
+
     // Modal ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     const modalStyles = {
         content : {
@@ -133,7 +134,7 @@ const Home = ({history}) => {
     }, [])
 
     return (
-        <div className="root h-full bg-green-700">
+        <div className="root h-full bg-green-700" id="home">
             <div className="container w-full mx-auto pt-12 pb-12"> 
                 <div className="flex flex-col justify-center align-center p-10 bg-white shadow-lg rounded-md">
                     {error && 
