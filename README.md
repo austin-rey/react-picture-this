@@ -7,13 +7,13 @@ Built for developers, designers and digital marketers.
 <em>Note: This is a project for my portfolio and will contain backend code that compromises backend logic.</em>
 
 ## Technologies Used
-UI Components         React
-CSS Library           Tailwind
-Application Server    Express
-API                   Node.js
-DB ORM                Prisma
-DB                    PostgreSQL (Hosted locally)
-Image Storage         AWS S3
+UI Components         React  
+CSS Library           Tailwind  
+Application Server    Express  
+API                   Node.js  
+DB ORM                Prisma  
+DB                    PostgreSQL (Hosted locally)  
+Image Storage         AWS S3  
 
 ## Contributing
 
